@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Historial | Javi Gamer</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{colors:{darkBg:'#0b0f19',darkCard:'#111827',darkBorder:'#1f2937',neonCyan:'#06b6d4',neonGreen:'#10b981',neonGold:'#f59e0b'}}}}</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>body{font-family:'Inter',sans-serif;background:#0b0f19;color:#f3f4f6;overflow-x:hidden;-webkit-tap-highlight-color:transparent}</style>
+</head>
+<body class="bg-darkBg min-h-screen flex flex-col">
+<div id="promo-banner" class="hidden bg-gradient-to-r from-purple-500 to-cyan-400 text-black text-center py-2.5 px-3 text-xs sm:text-sm font-black relative"><span id="banner-text" class="block pr-8"></span><button onclick="this.parentElement.classList.add('hidden')" class="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-black/20 flex items-center justify-center"><i class="fa-solid fa-xmark text-xs"></i></button></div>
+
+<header class="sticky top-0 z-40 bg-darkBg/90 backdrop-blur border-b border-white/5 h-14 sm:h-16 flex items-center">
+<div class="max-w-4xl mx-auto px-3 sm:px-4 w-full flex justify-between items-center">
+<a href="index.html" class="flex items-center gap-2 font-black text-[13px] sm:text-sm"><i class="fa-solid fa-arrow-left text-neonCyan"></i> <span id="site-name">JAVI GAMER</span></a>
+</div>
+</header>
+
+<main class="flex-1 max-w-4xl mx-auto w-full p-3 sm:p-4">
+<div id="gate" class="py-16 sm:py-20 text-center px-4"><div class="w-14 h-14 sm:w-16 sm:h-16 mx-auto rounded-2xl bg-neonCyan/20 flex items-center justify-center text-neonCyan text-xl sm:text-2xl mb-4"><i class="fa-solid fa-clock-rotate-left"></i></div><h1 class="text-xl sm:text-2xl font-black">Mis Recargas</h1><p class="text-[11px] sm:text-xs text-gray-500 mt-2">Inicia sesión para ver tu historial</p><button onclick="loginWithGoogle()" class="mt-6 px-6 py-3 rounded-full bg-neonCyan text-black font-black text-[13px] sm:text-sm w-full sm:w-auto">Iniciar Sesión</button></div>
+
+<div id="content" class="hidden">
+<div class="flex justify-between items-center mb-4 gap-2">
+<div class="flex items-center gap-2.5 sm:gap-3 min-w-0"><img id="u-avatar" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full shrink-0"><div class="min-w-0"><div id="u-name" class="font-black text-[13px] sm:text-sm truncate"></div><div id="u-email" class="text-[10px] sm:text-[11px] text-gray-500 truncate"></div></div></div>
+<button onclick="logoutUser()" class="text-[10px] sm:text-[11px] px-3 py-2 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 font-bold shrink-0">Salir</button>
+</div>
+<div class="grid grid-cols-3 gap-1.5 sm:gap-2 mb-4 sm:mb-5">
+<div class="bg-darkCard border border-darkBorder rounded-xl sm:rounded-2xl p-2.5 sm:p-3 text-center"><div class="text-[8px] sm:text-[10px] text-gray-500 font-bold uppercase leading-tight">Aprobadas</div><div id="k-appro" class="font-black text-neonGreen text-[16px] sm:text-lg mt-1">0</div></div>
+<div class="bg-darkCard border border-darkBorder rounded-xl sm:rounded-2xl p-2.5 sm:p-3 text-center"><div class="text-[8px] sm:text-[10px] text-gray-500 font-bold uppercase leading-tight">Pendientes</div><div id="k-pend" class="font-black text-neonGold text-[16px] sm:text-lg mt-1">0</div></div>
+<div class="bg-darkCard border border-darkBorder rounded-xl sm:rounded-2xl p-2.5 sm:p-3 text-center"><div class="text-[8px] sm:text-[10px] text-gray-500 font-bold uppercase leading-tight">Rechazadas</div><div id="k-rej" class="font-black text-red-400 text-[16px] sm:text-lg mt-1">0</div></div>
+</div>
+<div id="list" class="space-y-2.5 sm:space-y-3"></div>
+</div>
+</main>
+
+<footer class="bg-[#05070e] border-t border-white/5 py-6 px-3 sm:px-4 text-[11px] pb-24 sm:pb-6">
+<div id="footer-contact" class="hidden max-w-4xl mx-auto mb-3 text-center">
+<div id="footer-email" class="text-[11px] sm:text-[12px] text-gray-400 break-all"></div>
+<div id="footer-location" class="text-[11px] sm:text-[12px] text-gray-500 mt-1"></div>
+</div>
+<div id="legal-links" class="hidden max-w-4xl mx-auto flex flex-wrap gap-3 sm:gap-4 justify-center">
+<button id="btn-terms" onclick="openLegal('terms')" class="hidden text-gray-500 hover:text-neonCyan text-[11px] sm:text-[12px]">Términos</button>
+<button id="btn-privacy" onclick="openLegal('privacy')" class="hidden text-gray-500 hover:text-neonCyan text-[11px] sm:text-[12px]">Privacidad</button>
+<button id="btn-refund" onclick="openLegal('refund')" class="hidden text-gray-500 hover:text-neonCyan text-[11px] sm:text-[12px]">Reembolso</button>
+<a id="footer-wpp-link" href="#" target="_blank" class="hidden text-emerald-400 text-[11px] sm:text-[12px]"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+<a id="footer-tg-link" href="#" target="_blank" class="hidden text-cyan-400 text-[11px] sm:text-[12px]"><i class="fa-brands fa-telegram"></i> Telegram</a>
+</div>
+<div class="text-center text-[9px] sm:text-[10px] text-gray-600 mt-3">© 2026 <span id="copy-site">Javi Gamer Recargas</span></div>
+</footer>
+
+<div id="floating-container" class="hidden fixed bottom-4 sm:bottom-5 right-3 sm:right-5 z-[70] flex flex-col gap-2 sm:gap-3">
+  <a id="float-telegram" href="#" target="_blank" class="hidden w-[52px] h-[52px] sm:w-[60px] sm:h-[60px] rounded-full bg-[#0f1c26] border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-[22px] sm:text-[26px] shadow-[0_8px_25px_rgba(0,0,0,.5)]"><i class="fa-brands fa-telegram"></i></a>
+  <a id="float-whatsapp" href="#" target="_blank" class="hidden w-[52px] h-[52px] sm:w-[60px] sm:h-[60px] rounded-full bg-[#102213] border border-green-500/30 flex items-center justify-center text-[#25D366] text-[22px] sm:text-[26px] shadow-[0_8px_25px_rgba(0,0,0,.5)]"><i class="fa-brands fa-whatsapp"></i></a>
+</div>
+
+<div id="legal-modal" class="fixed inset-0 z-[60] hidden bg-black/70 p-3 sm:p-4 flex items-center justify-center"><div class="bg-[#111827] border border-white/10 rounded-2xl max-w-md w-full p-4 sm:p-5 max-h-[80vh] overflow-y-auto"><div class="flex justify-between items-center mb-3"><h3 id="legal-title" class="font-black text-sm"></h3><button onclick="closeLegal()" class="w-7 h-7 rounded-full bg-white/10"><i class="fa-solid fa-xmark text-xs"></i></button></div><p id="legal-text" class="text-[12px] text-gray-300 whitespace-pre-wrap"></p></div></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getFirestore, doc, collection, onSnapshot, enableIndexedDbPersistence, query, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+const firebaseConfig={apiKey:"AIzaSyATtbMHvq8jj-LqgLSLxtkGkR3PmWs84D8",authDomain:"recargas-nexus-ff.firebaseapp.com",projectId:"recargas-nexus-ff",storageBucket:"recargas-nexus-ff.firebasestorage.app",messagingSenderId:"930789173921",appId:"1:930789173921:web:a9dd8d93de42599d795ee0"};
+const appId='nexus-gamer-store';
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+enableIndexedDbPersistence(db).catch(()=>{});
+setPersistence(auth,browserLocalPersistence).catch(()=>{});
+let settings={};
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+onSnapshot(doc(db,'artifacts',appId,'public','data','settings','general'),s=>{
+  if(!s.exists()) return;
+  settings=s.data();
+  document.getElementById('site-name').textContent=settings.siteName||'JAVI GAMER';
+  document.getElementById('copy-site').textContent=settings.siteName||'Javi Gamer Recargas';
+  if(settings.bannerActive===true && settings.bannerText){
+    document.getElementById('promo-banner').classList.remove('hidden');
+    document.getElementById('banner-text').textContent=settings.bannerText;
+  }
+  if(settings.contactActive!==false && (settings.footerEmail || settings.footerLocation)){
+    document.getElementById('footer-contact').classList.remove('hidden');
+    document.getElementById('footer-email').textContent=settings.footerEmail||'';
+    document.getElementById('footer-location').textContent=settings.footerLocation||'';
+  }
+  const hasLegal = settings.legalActive!==false;
+  const hasContactLinks = settings.contactActive!==false;
+  if(hasLegal || hasContactLinks){
+    document.getElementById('legal-links').classList.remove('hidden');
+  }
+  if(hasLegal){
+    if(settings.legal_t) document.getElementById('btn-terms').classList.remove('hidden');
+    if(settings.legal_p) document.getElementById('btn-privacy').classList.remove('hidden');
+    if(settings.legal_r) document.getElementById('btn-refund').classList.remove('hidden');
+  }
+  if(hasContactLinks){
+    if(settings.wpp){
+      document.getElementById('footer-wpp-link').href='https://wa.me/'+settings.wpp;
+      document.getElementById('footer-wpp-link').classList.remove('hidden');
+    }
+    const tg = settings.telegramChannel || (settings.telegram? 'https://t.me/'+settings.telegram.replace('https://t.me/','').replace('@','').trim() : '');
+    if(tg){
+      document.getElementById('footer-tg-link').href=tg;
+      document.getElementById('footer-tg-link').classList.remove('hidden');
+    }
+  }
+  if(settings.floatActive!==false){
+    let showFloat = false;
+    if(settings.wpp && settings.floatWhatsappActive!==false){
+      document.getElementById('float-whatsapp').href='https://wa.me/'+settings.wpp;
+      document.getElementById('float-whatsapp').classList.remove('hidden');
+      showFloat=true;
+    }
+    const tg2 = settings.telegramChannel || (settings.telegram? 'https://t.me/'+settings.telegram.replace('https://t.me/','').replace('@','').trim() : '');
+    if(tg2 && settings.floatTelegramActive!==false){
+      document.getElementById('float-telegram').href=tg2;
+      document.getElementById('float-telegram').classList.remove('hidden');
+      showFloat=true;
+    }
+    if(showFloat) document.getElementById('floating-container').classList.remove('hidden');
+  }
+});
+
+onAuthStateChanged(auth,u=>{
+  if(!u){
+    document.getElementById('gate').classList.remove('hidden');
+    document.getElementById('content').classList.add('hidden');
+    return;
+  }
+  document.getElementById('gate').classList.add('hidden');
+  document.getElementById('content').classList.remove('hidden');
+  document.getElementById('u-name').textContent=u.displayName||'Gamer';
+  document.getElementById('u-email').textContent=u.email||'';
+  if(u.photoURL) document.getElementById('u-avatar').src=u.photoURL;
+  listenOrders(u.uid);
+});
+
+function listenOrders(uid){
+  const q = query(collection(db,'artifacts',appId,'public','data','orders'), where('userId','==',uid));
+  onSnapshot(q, snap=>{
+    let orders=[];
+    snap.forEach(d=>orders.push(d.data()));
+    orders.sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));
+    document.getElementById('k-appro').textContent=orders.filter(o=>(o.status||'pendiente')==='aprobado').length;
+    document.getElementById('k-pend').textContent=orders.filter(o=>(o.status||'pendiente')==='pendiente').length;
+    document.getElementById('k-rej').textContent=orders.filter(o=>(o.status||'')==='rechazado').length;
+    document.getElementById('list').innerHTML=orders.map(o=>{
+      const st=o.status||'pendiente';
+      const color=st==='aprobado'?'bg-neonGreen/20 text-neonGreen border-neonGreen/30':st==='rechazado'?'bg-red-500/20 text-red-400 border-red-500/30':'bg-neonGold/20 text-neonGold border-neonGold/30';
+      const date=o.createdAt?new Date(o.createdAt).toLocaleDateString('es-PY')+' '+new Date(o.createdAt).toLocaleTimeString('es-PY',{hour:'2-digit',minute:'2-digit'}):'';
+      return `<div class="bg-darkCard border border-darkBorder rounded-xl sm:rounded-2xl p-3 sm:p-4">
+        <div class="flex justify-between items-start mb-2 gap-2"><div class="font-bold text-[12px] sm:text-[13px] leading-tight">${esc(o.productId||'Recarga')}</div><span class="text-[9px] sm:text-[10px] px-2 py-1 rounded-full border font-black uppercase ${color} shrink-0">${esc(st)}</span></div>
+        <div class="text-[10px] sm:text-[11px] text-gray-500 mb-2 truncate">${date} • 🧾 ${esc(o.txId||'')}</div>
+        <div class="bg-darkBg rounded-lg sm:rounded-xl p-2.5 sm:p-3 text-[11px] sm:text-[12px] space-y-1">
+          <div class="truncate">👤 ID: <span class="text-neonCyan font-bold">${esc(o.playerId||'')}</span></div>
+          <div>💰 $${Number(o.priceUSD||0).toFixed(2)} • ₲${Number(o.pricePYG||0).toLocaleString('es-PY')}</div>
+        </div>
+      </div>`;
+    }).join('')||'<p class="text-center text-gray-500 py-10 text-xs">Sin recargas aún.</p>';
+  });
+}
+window.loginWithGoogle=async()=>{try{await signInWithPopup(auth,new GoogleAuthProvider());}catch(e){alert(e.message)}};
+window.logoutUser=async()=>{await signOut(auth);location.reload();};
+window.openLegal=function(t){
+  if(settings.legalActive===false) return;
+  const map={terms:['Términos',settings.legal_t],privacy:['Privacidad',settings.legal_p],refund:['Reembolso',settings.legal_r]};
+  const [title,text]=map[t]||['',''];
+  if(!text) return;
+  document.getElementById('legal-title').textContent=title;
+  document.getElementById('legal-text').textContent=text;
+  document.getElementById('legal-modal').classList.remove('hidden');
+}
+window.closeLegal=function(){document.getElementById('legal-modal').classList.add('hidden');}
+</script>
+</body>
+</html>
