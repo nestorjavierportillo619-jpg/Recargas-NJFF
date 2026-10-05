@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /artifacts/{appId}/public/data/{collection}/{docId} {
+      allow read: if true;
+      allow write: if true;
+    }
+    match /artifacts/{appId}/users/{userId}/{collection}/{docId} {
+      allow read, write: if true;
+    }
+    match /artifacts/{appId}/public/data/settings/general {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}
