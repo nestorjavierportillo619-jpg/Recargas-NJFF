@@ -4,236 +4,670 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Admin NexusGamer - Pro Dashboard</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<script>tailwind.config={darkMode:'class',theme:{extend:{colors:{darkBg:'#0b0f19',darkCard:'#111827',darkBorder:'#1f2937',neonCyan:'#06b6d4',neonGold:'#f59e0b',neonPurple:'#8b5cf6',neonGreen:'#10b981'}}}}</script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<script>tailwind.config={darkMode:'class',theme:{extend:{colors:{darkBg:'#0b0f19',darkCard:'#111827',darkBorder:'#1f2937'}}}}</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>body{font-family:'Inter',sans-serif;background:#0b0f19;overflow-x:hidden}.navbtn.active{background:rgba(6,182,212,.15);color:#06b6d4}#sidebar{transition:transform.3s ease}input,select,textarea{font-size:16px!important}textarea{resize:none!important}@media(max-width:640px){#sidebar{width:85vw;max-width:300px}}</style>
+<style>
+body{font-family:'Inter',sans-serif;background:#0b0f19;overflow-x:hidden;color:#fff}
+.navbtn.active{background:color-mix(in srgb, var(--p1) 15%, transparent)!important;color:var(--p1)!important;border-color:var(--p1)!important}
+#sidebar{transition:transform.3s ease}input,select,textarea{font-size:16px!important}textarea{resize:none!important}
+@media(max-width:640px){#sidebar{width:85vw;max-width:300px}}
+.tema-rojo{--p1:#ef4444;--p2:#b91c1c;--pBg:rgba(239,68,68,.15)}
+.tema-verde{--p1:#059669;--p2:#10b981;--pBg:rgba(5,150,105,.15)}
+.tema-rosado{--p1:#ec4899;--p2:#be185d;--pBg:rgba(236,72,153,.15)}
+.tema-morado{--p1:#a855f7;--p2:#7e22ce;--pBg:rgba(168,85,247,.15)}
+.tema-amarillo{--p1:#facc15;--p2:#ca8a04;--pBg:rgba(250,204,21,.15)}
+.tema-azul{--p1:#0ea5e9;--p2:#0284c7;--pBg:rgba(14,165,233,.15)}
+.tema-cyan{--p1:#06b6d4;--p2:#3b82f6;--pBg:rgba(6,182,212,.15)}
+.btn-theme{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff!important}
+</style>
 </head>
-<body class="text-white">
+<body class="text-white tema-cyan">
 <div id="gate" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4">
-<div class="bg-darkCard border border-neonGold/40 rounded-3xl p-6 w-full max-w-sm text-center">
-<div class="w-14 h-14 mx-auto rounded-2xl bg-neonGold/20 flex items-center justify-center text-neonGold text-xl mb-3"><i class="fa-solid fa-crown"></i></div>
-<h2 class="font-black text-lg">JAVI<span class="text-neonGold">GAMER</span> ADMIN</h2>
-<input type="password" id="pw" onkeydown="if(event.key==='Enter')unlock()" placeholder="Romi20" class="w-full mt-4 bg-darkBg border border-darkBorder rounded-xl p-4 text-center focus:border-neonGold focus:outline-none">
-<button onclick="unlock()" class="w-full mt-3 bg-neonGold text-black font-extrabold py-4 rounded-xl">Entrar</button>
+<div class="bg-darkCard border rounded-3xl p-6 w-full max-w-sm text-center shadow-2xl" style="border-color:color-mix(in srgb, var(--p1) 40%, transparent)">
+<div class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-xl mb-3 shadow-lg" style="background:color-mix(in srgb, var(--p1) 20%, transparent);color:var(--p1)"><i class="fa-solid fa-crown"></i></div>
+<h2 class="font-black text-lg tracking-wide">JAVI<span style="color:var(--p1)">GAMER</span> ADMIN</h2>
+<p class="text-[10px] text-gray-500 mt-1 tracking-widest font-bold">ACCESO PROPIETARIO BLINDADO</p>
+<div id="gate-info" class="mt-4 bg-darkBg border border-darkBorder rounded-xl p-3 text-[11px] text-gray-400">Solo <span class="font-bold" style="color:var(--p1)">nestorjavierportillo619@gmail.com</span> puede entrar</div>
+<button id="btnGoogleLogin" class="w-full mt-4 bg-white text-black font-extrabold py-4 rounded-xl flex items-center justify-center gap-2 shadow-lg transition-transform active:scale-95"><i class="fa-brands fa-google"></i> Entrar con Google</button>
+<p id="gate-msg" class="text-[11px] text-red-400 mt-3 hidden"></p>
 </div></div>
+
 <div id="app" class="hidden min-h-screen">
 <header class="sticky top-0 z-40 bg-darkCard/95 backdrop-blur border-b border-darkBorder px-4 h-16 flex items-center justify-between">
-<button onclick="toggleMenu()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-darkBg border border-darkBorder"><i class="fa-solid fa-bars text-neonCyan"></i></button>
-<div class="font-black text-sm">JAVI<span class="text-neonCyan">GAMER</span></div>
-<div class="flex gap-2"><a href="index.html" target="_blank" class="w-10 h-10 flex items-center justify-center rounded-xl bg-darkBg border border-darkBorder text-neonCyan"><i class="fa-solid fa-eye text-sm"></i></a><button onclick="logout()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-red-500/10 border border-red-500/20 text-red-400"><i class="fa-solid fa-right-from-bracket text-sm"></i></button></div>
+<button onclick="toggleMenu()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-darkBg border border-darkBorder transition hover:border-cyan-500"><i class="fa-solid fa-bars" style="color:var(--p1)"></i></button>
+<div class="font-black text-sm tracking-wider">JAVI<span style="color:var(--p1)">GAMER</span></div>
+<div class="flex gap-2"><a href="index.html" target="_blank" class="w-10 h-10 flex items-center justify-center rounded-xl bg-darkBg border border-darkBorder transition hover:border-cyan-500" style="color:var(--p1)"><i class="fa-solid fa-eye text-sm"></i></a><button onclick="logout()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 transition hover:bg-red-500/20"><i class="fa-solid fa-right-from-bracket text-sm"></i></button></div>
 </header>
-<div id="overlay" onclick="toggleMenu()" class="hidden fixed inset-0 bg-black/70 z-40"></div>
-<aside id="sidebar" class="fixed top-0 left-0 h-full w-72 bg-darkCard border-r border-darkBorder z-50 -translate-x-full flex flex-col">
-<div class="p-5 border-b border-darkBorder flex justify-between items-center"><div><div class="font-black">JAVI<span class="text-neonCyan">GAMER</span></div><div class="text-[10px] text-gray-500">PANEL PREMIUM</div></div><button onclick="toggleMenu()"><i class="fa-solid fa-xmark text-xl text-gray-500"></i></button></div>
+<div id="overlay" onclick="toggleMenu()" class="hidden fixed inset-0 bg-black/70 z-40 backdrop-blur-sm"></div>
+
+<aside id="sidebar" class="fixed top-0 left-0 h-full w-72 bg-darkCard border-r border-darkBorder z-50 -translate-x-full flex flex-col shadow-2xl">
+<div class="p-5 border-b border-darkBorder flex justify-between items-center"><div><div class="font-black tracking-wider">JAVI<span style="color:var(--p1)">GAMER</span></div><div class="text-[10px] text-gray-500 font-bold tracking-widest mt-0.5">PANEL PREMIUM</div></div><button onclick="toggleMenu()" class="w-8 h-8 rounded-lg flex items-center justify-center bg-darkBg border border-darkBorder text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button></div>
 <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
-<button onclick="go('dashboard')" data-nav="dashboard" class="navbtn active w-full flex items-center gap-3 p-4 rounded-2xl text-sm font-bold bg-darkBg border border-darkBorder"><i class="fa-solid fa-chart-line text-neonCyan w-5"></i>Dashboard</button>
-<button onclick="go('orders')" data-nav="orders" class="navbtn w-full flex items-center gap-3 p-4 rounded-2xl text-sm font-bold bg-darkBg border border-darkBorder"><i class="fa-solid fa-receipt text-neonGreen w-5"></i>Órdenes <span id="badge" class="ml-auto bg-neonCyan text-black text-[10px] px-2 py-0.5 rounded-full font-black hidden">0</span></button>
-<button onclick="go('products')" data-nav="products" class="navbtn w-full flex items-center gap-3 p-4 rounded-2xl text-sm font-bold bg-darkBg border border-darkBorder"><i class="fa-solid fa-box text-neonPurple w-5"></i>Productos</button>
-<button onclick="go('catalogs')" data-nav="catalogs" class="navbtn w-full flex items-center gap-3 p-4 rounded-2xl text-sm font-bold bg-darkBg border border-darkBorder"><i class="fa-solid fa-layer-group text-neonCyan w-5"></i>Catálogos</button>
-<button onclick="go('clients')" data-nav="clients" class="navbtn w-full flex items-center gap-3 p-4 rounded-2xl text-sm font-bold bg-darkBg border border-darkBorder"><i class="fa-solid fa-users text-neonCyan w-5"></i>Clientes</button>
-<button onclick="go('coupons')" data-nav="coupons" class="navbtn w-full flex items-center gap-3 p-4 rounded-2xl text-sm font-bold bg-darkBg border border-darkBorder"><i class="fa-solid fa-ticket text-neonCyan w-5"></i>Cupones</button>
-<button onclick="go('settings')" data-nav="settings" class="navbtn w-full flex items-center gap-3 p-4 rounded-2xl text-sm font-bold bg-darkBg border border-darkBorder"><i class="fa-solid fa-gear text-gray-400 w-5"></i>Ajustes</button>
+<button onclick="go('dashboard')" data-nav="dashboard" class="navbtn active w-full flex items-center gap-3 p-3.5 rounded-2xl text-sm font-bold bg-darkBg border border-darkBorder transition"><i class="fa-solid fa-chart-line w-5" style="color:var(--p1)"></i>Dashboard</button>
+<button onclick="go('orders')" data-nav="orders" class="navbtn w-full flex items-center gap-3 p-3.5 rounded-2xl text-sm font-bold bg-darkBg border border-darkBorder transition"><i class="fa-solid fa-receipt w-5 text-green-400"></i>Órdenes <span id="badge" class="ml-auto text-white text-[10px] px-2 py-0.5 rounded-full font-black hidden" style="background:var(--p1)">0</span></button>
+<button onclick="go('products')" data-nav="products" class="navbtn w-full flex items-center gap-3 p-3.5 rounded-2xl text-sm font-bold bg-darkBg border border-darkBorder transition"><i class="fa-solid fa-box w-5 text-purple-400"></i>Productos</button>
+<button onclick="go('catalogs')" data-nav="catalogs" class="navbtn w-full flex items-center gap-3 p-3.5 rounded-2xl text-sm font-bold bg-darkBg border border-darkBorder transition"><i class="fa-solid fa-layer-group w-5" style="color:var(--p1)"></i>Catálogos</button>
+<button onclick="go('clients')" data-nav="clients" class="navbtn w-full flex items-center gap-3 p-3.5 rounded-2xl text-sm font-bold bg-darkBg border border-darkBorder transition"><i class="fa-solid fa-users w-5" style="color:var(--p1)"></i>Clientes</button>
+<button onclick="go('coupons')" data-nav="coupons" class="navbtn w-full flex items-center gap-3 p-3.5 rounded-2xl text-sm font-bold bg-darkBg border border-darkBorder transition"><i class="fa-solid fa-ticket w-5" style="color:var(--p1)"></i>Cupones</button>
+<button onclick="go('settings')" data-nav="settings" class="navbtn w-full flex items-center gap-3 p-3.5 rounded-2xl text-sm font-bold bg-darkBg border border-darkBorder transition"><i class="fa-solid fa-gear text-gray-400 w-5"></i>Ajustes Pro</button>
 </nav>
-<div class="p-4 border-t border-darkBorder"><button onclick="logout()" class="w-full flex items-center gap-3 p-4 rounded-2xl text-sm font-bold bg-red-500/10 border border-red-500/20 text-red-400"><i class="fa-solid fa-right-from-bracket w-5"></i>Cerrar sesión</button></div>
+<div class="p-4 border-t border-darkBorder"><button onclick="logout()" class="w-full flex items-center gap-3 p-3.5 rounded-2xl text-sm font-bold bg-red-500/10 border border-red-500/20 text-red-400 transition hover:bg-red-500/20"><i class="fa-solid fa-right-from-bracket w-5"></i>Cerrar sesión</button></div>
 </aside>
+
 <main class="p-4 pb-32 max-w-3xl mx-auto w-full">
 <section id="sec-dashboard">
   <div class="flex justify-between items-center mb-6">
-    <div><h1 class="text-[26px] font-black tracking-tight">Dashboard</h1><p class="text-[12px] text-gray-500 font-medium">Resumen • Solo aprobados cuentan</p></div>
-    <button onclick="initFirebaseListeners()" class="w-10 h-10 rounded-xl bg-darkCard border border-darkBorder text-neonCyan"><i class="fa-solid fa-rotate text-sm"></i></button>
+    <div><h1 class="text-[26px] font-black tracking-tight">Dashboard</h1><p class="text-[12px] text-gray-500 font-medium">Resumen general • Solo registros aprobados</p></div>
+    <button onclick="initFirebaseListeners()" class="w-10 h-10 rounded-xl bg-darkCard border border-darkBorder flex items-center justify-center transition hover:border-cyan-500" style="color:var(--p1)"><i class="fa-solid fa-rotate text-sm"></i></button>
   </div>
   <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
-    <div class="bg-darkCard border border-neonGreen/20 rounded-[20px] p-4 relative overflow-hidden"><div class="absolute top-0 right-0 w-20 h-20 bg-neonGreen/10 rounded-full blur-[20px]"></div><div class="flex justify-between items-start"><div class="w-9 h-9 rounded-xl bg-neonGreen/15 flex items-center justify-center text-neonGreen"><i class="fa-solid fa-sack-dollar text-sm"></i></div><span class="text-[10px] font-black px-2 py-1 rounded-full bg-neonGreen/15 text-neonGreen">HOY</span></div><div class="text-[10px] text-gray-500 font-bold uppercase mt-3 tracking-widest">Ventas Hoy</div><div id="kToday" class="text-[18px] font-black mt-1 leading-none">₲0</div><div id="kTodayUSD" class="text-[11px] text-gray-500 mt-1">$0.00</div></div>
-    <div class="bg-darkCard border border-neonCyan/20 rounded-[20px] p-4 relative overflow-hidden"><div class="absolute top-0 right-0 w-20 h-20 bg-neonCyan/10 rounded-full blur-[20px]"></div><div class="flex justify-between items-start"><div class="w-9 h-9 rounded-xl bg-neonCyan/15 flex items-center justify-center text-neonCyan"><i class="fa-solid fa-chart-simple text-sm"></i></div><span class="text-[10px] font-black px-2 py-1 rounded-full bg-neonCyan/15 text-neonCyan">TOTAL</span></div><div class="text-[10px] text-gray-500 font-bold uppercase mt-3 tracking-widest">Ventas Totales</div><div id="kMonth" class="text-[18px] font-black mt-1 leading-none">₲0</div><div id="kMonthUSD" class="text-[11px] text-gray-500 mt-1">$0.00</div></div>
-    <div class="bg-darkCard border border-darkBorder rounded-[20px] p-4"><div class="flex justify-between items-start"><div class="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center text-white"><i class="fa-solid fa-receipt text-sm"></i></div><div id="kOrdersBadge" class="text-[10px] font-black px-2 py-1 rounded-full bg-white/5 text-gray-400">0 ORDENES</div></div><div class="text-[10px] text-gray-500 font-bold uppercase mt-3 tracking-widest">Estado Órdenes</div><div id="kOrders" class="flex gap-2 mt-2 flex-wrap"></div></div>
-    <div class="bg-darkCard border border-neonCyan/20 rounded-[20px] p-4"><div class="w-9 h-9 rounded-xl bg-neonCyan/10 flex items-center justify-center text-neonCyan"><i class="fa-solid fa-bolt text-sm"></i></div><div class="text-[10px] text-gray-500 font-bold uppercase mt-3 tracking-widest">Ticket Promedio</div><div id="kAvg" class="text-[18px] font-black mt-1">₲0</div><div id="kAvgSub" class="text-[11px] text-gray-500 mt-1">Por venta aprobada</div></div>
+    <div class="bg-darkCard border border-green-500/20 rounded-[20px] p-4 shadow-sm"><div class="flex justify-between items-start"><div class="w-9 h-9 rounded-xl bg-green-500/15 flex items-center justify-center text-green-400"><i class="fa-solid fa-sack-dollar text-sm"></i></div><span class="text-[10px] font-black px-2 py-1 rounded-full bg-green-500/15 text-green-400">HOY</span></div><div class="text-[10px] text-gray-500 font-bold uppercase mt-3 tracking-wider">Ventas Hoy</div><div id="kToday" class="text-[18px] font-black mt-1">₲0</div><div id="kTodayUSD" class="text-[11px] text-gray-500 mt-1">$0.00</div></div>
+    <div class="bg-darkCard border rounded-[20px] p-4 shadow-sm" style="border-color:color-mix(in srgb, var(--p1) 20%, transparent)"><div class="flex justify-between items-start"><div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:color-mix(in srgb, var(--p1) 15%, transparent);color:var(--p1)"><i class="fa-solid fa-chart-simple text-sm"></i></div><span class="text-[10px] font-black px-2 py-1 rounded-full" style="background:color-mix(in srgb, var(--p1) 15%, transparent);color:var(--p1)">TOTAL</span></div><div class="text-[10px] text-gray-500 font-bold uppercase mt-3 tracking-wider">Ventas Totales</div><div id="kMonth" class="text-[18px] font-black mt-1">₲0</div><div id="kMonthUSD" class="text-[11px] text-gray-500 mt-1">$0.00</div></div>
+    <div class="bg-darkCard border border-darkBorder rounded-[20px] p-4 shadow-sm"><div class="flex justify-between items-start"><div class="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center text-white"><i class="fa-solid fa-receipt text-sm"></i></div><div id="kOrdersBadge" class="text-[10px] font-black px-2 py-1 rounded-full bg-white/5 text-gray-400">0 ORDENES</div></div><div class="text-[10px] text-gray-500 font-bold uppercase mt-3 tracking-wider">Estado Órdenes</div><div id="kOrders" class="flex gap-2 mt-2 flex-wrap"></div></div>
+    <div class="bg-darkCard border rounded-[20px] p-4 shadow-sm" style="border-color:color-mix(in srgb, var(--p1) 20%, transparent)"><div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:color-mix(in srgb, var(--p1) 10%, transparent);color:var(--p1)"><i class="fa-solid fa-bolt text-sm"></i></div><div class="text-[10px] text-gray-500 font-bold uppercase mt-3 tracking-wider">Ticket Promedio</div><div id="kAvg" class="text-[18px] font-black mt-1">₲0</div><div id="kAvgSub" class="text-[11px] text-gray-500 mt-1">Por venta aprobada</div></div>
   </div>
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
-    <div class="bg-darkCard border border-darkBorder rounded-[20px] p-5"><div class="flex justify-between items-center mb-4"><h3 class="font-black text-[14px]">Más vendidos</h3><span class="text-[10px] px-2 py-1 rounded-full bg-neonCyan/10 text-neonCyan font-bold">TOP 5</span></div><div id="topProducts" class="space-y-2"></div></div>
-    <div class="bg-darkCard border border-darkBorder rounded-[20px] p-5"><div class="flex justify-between items-center mb-4"><h3 class="font-black text-[14px]">Actividad reciente</h3><span class="text-[10px] px-2 py-1 rounded-full bg-white/5 text-gray-400 font-bold">ÚLTIMAS 5</span></div><div id="recentOrders" class="space-y-3"></div></div>
+    <div class="bg-darkCard border border-darkBorder rounded-[20px] p-5 shadow-sm"><div class="flex justify-between items-center mb-4"><h3 class="font-black text-[14px]">Más vendidos</h3><span class="text-[10px] px-2 py-1 rounded-full font-bold" style="background:color-mix(in srgb, var(--p1) 10%, transparent);color:var(--p1)">TOP 5</span></div><div id="topProducts" class="space-y-2"></div></div>
+    <div class="bg-darkCard border border-darkBorder rounded-[20px] p-5 shadow-sm"><div class="flex justify-between items-center mb-4"><h3 class="font-black text-[14px]">Actividad reciente</h3><span class="text-[10px] px-2 py-1 rounded-full bg-white/5 text-gray-400 font-bold">ÚLTIMAS 5</span></div><div id="recentOrders" class="space-y-3"></div></div>
   </div>
 </section>
+
 <section id="sec-orders" class="hidden">
-<div class="flex justify-between items-center mb-4"><h1 class="text-2xl font-black">Órdenes</h1><div class="flex gap-2"><button onclick="deleteAllRejected()" class="bg-red-500/15 border border-red-500/30 text-red-400 px-3 py-2 rounded-xl text-[11px] font-bold"><i class="fa-solid fa-trash"></i> Borrar Rechazados</button><button onclick="exportExcel()" class="bg-neonGreen/15 border border-neonGreen/30 text-neonGreen px-3 py-2 rounded-xl text-[11px] font-bold">Excel</button></div></div>
-<input oninput="searchO(this.value)" placeholder="🔍 Buscar..." class="w-full bg-darkCard border border-darkBorder rounded-xl p-3.5 mb-3">
-<div class="flex gap-2 overflow-x-auto pb-2 mb-4"><button onclick="fOrder('all')" data-ofilter="all" class="ofilter-btn px-4 py-2 rounded-full text-xs font-bold bg-neonCyan text-black whitespace-nowrap">Todas</button><button onclick="fOrder('pendiente')" data-ofilter="pendiente" class="ofilter-btn px-4 py-2 rounded-full text-xs font-bold bg-darkCard border border-darkBorder text-gray-400 whitespace-nowrap">Pendiente</button><button onclick="fOrder('aprobado')" data-ofilter="aprobado" class="ofilter-btn px-4 py-2 rounded-full text-xs font-bold bg-darkCard border border-darkBorder text-gray-400 whitespace-nowrap">Aprobado</button><button onclick="fOrder('rechazado')" data-ofilter="rechazado" class="ofilter-btn px-4 py-2 rounded-full text-xs font-bold bg-darkCard border border-darkBorder text-gray-400 whitespace-nowrap">Rechazado</button></div>
-<div id="oList" class="space-y-3"></div><button id="moreOrders" onclick="showMore()" class="hidden w-full mt-4 py-3 bg-darkCard border border-darkBorder rounded-xl text-sm font-bold">Ver más</button></section>
-<section id="sec-products" class="hidden"><div class="flex justify-between items-center mb-4"><h1 class="text-2xl font-black">Productos</h1><button onclick="openProd()" class="bg-neonCyan text-black px-4 py-2.5 rounded-xl text-sm font-bold">+ Nuevo</button></div><input oninput="searchP(this.value)" placeholder="🔍 Buscar..." class="w-full bg-darkCard border border-darkBorder rounded-xl p-3.5 mb-4"><div id="pList" class="space-y-3"></div></section>
-<section id="sec-catalogs" class="hidden"><div class="flex justify-between items-center mb-4"><h1 class="text-2xl font-black">Catálogos</h1><button onclick="openCat()" class="bg-neonCyan text-black px-4 py-2.5 rounded-xl text-sm font-bold">+ Nuevo</button></div><div id="catList" class="grid grid-cols-2 gap-3"></div></section>
+<div class="flex justify-between items-center mb-4"><h1 class="text-2xl font-black">Órdenes</h1><div class="flex gap-2"><button onclick="deleteAllRejected()" class="bg-red-500/15 border border-red-500/30 text-red-400 px-3 py-2 rounded-xl text-[11px] font-bold transition hover:bg-red-500/25"><i class="fa-solid fa-trash"></i> Borrar Rechazados</button><button onclick="exportExcel()" class="bg-green-500/15 border border-green-500/30 text-green-400 px-3 py-2 rounded-xl text-[11px] font-bold transition hover:bg-green-500/25"><i class="fa-solid fa-file-excel mr-1"></i> Excel</button></div></div>
+<input oninput="searchO(this.value)" placeholder="🔍 Buscar por cliente, ID o referencia..." class="w-full bg-darkCard border border-darkBorder rounded-xl p-3.5 mb-3 focus:border-cyan-500 outline-none">
+<div class="flex gap-2 overflow-x-auto pb-2 mb-4"><button onclick="fOrder('all')" data-ofilter="all" class="ofilter-btn px-4 py-2 rounded-full text-xs font-bold text-white whitespace-nowrap" style="background:var(--p1)">Todas</button><button onclick="fOrder('pendiente')" data-ofilter="pendiente" class="ofilter-btn px-4 py-2 rounded-full text-xs font-bold bg-darkCard border border-darkBorder text-gray-400 whitespace-nowrap">Pendiente</button><button onclick="fOrder('aprobado')" data-ofilter="aprobado" class="ofilter-btn px-4 py-2 rounded-full text-xs font-bold bg-darkCard border border-darkBorder text-gray-400 whitespace-nowrap">Aprobado</button><button onclick="fOrder('rechazado')" data-ofilter="rechazado" class="ofilter-btn px-4 py-2 rounded-full text-xs font-bold bg-darkCard border border-darkBorder text-gray-400 whitespace-nowrap">Rechazado</button></div>
+<div id="oList" class="space-y-3"></div><button id="moreOrders" onclick="showMore()" class="hidden w-full mt-4 py-3 bg-darkCard border border-darkBorder rounded-xl text-sm font-bold hover:border-cyan-500 transition">Ver más</button>
+</section>
+
+<section id="sec-products" class="hidden">
+  <div class="flex justify-between items-center mb-4"><h1 class="text-2xl font-black">Productos</h1><button onclick="openProd()" class="px-4 py-2.5 rounded-xl text-sm font-bold text-white btn-theme shadow-md">+ Nuevo Producto</button></div>
+  <input oninput="searchP(this.value)" placeholder="🔍 Buscar producto por nombre o juego..." class="w-full bg-darkCard border border-darkBorder rounded-xl p-3.5 mb-4 focus:border-cyan-500 outline-none">
+  <div id="pList" class="space-y-3"></div>
+</section>
+
+<section id="sec-catalogs" class="hidden">
+  <div class="flex justify-between items-center mb-4"><h1 class="text-2xl font-black">Catálogos</h1><button onclick="openCat()" class="px-4 py-2.5 rounded-xl text-sm font-bold text-white btn-theme shadow-md">+ Nuevo Catálogo</button></div>
+  <div id="catList" class="grid grid-cols-2 gap-3"></div>
+</section>
+
 <section id="sec-clients" class="hidden">
-  <h1 class="text-2xl font-black mb-4">Clientes</h1>
+  <h1 class="text-2xl font-black mb-4">Clientes + Billetera</h1>
   <div id="debug-box" class="hidden bg-black/40 border border-yellow-500/20 rounded-xl p-3 mb-3 text-[11px] font-mono">
-    <div>📊 Registrados: <span id="dbg-reg" class="text-cyan-400 font-black">0</span></div>
+    <div>📊 Registrados: <span id="dbg-reg" class="font-black" style="color:var(--p1)">0</span></div>
     <div>📦 Órdenes totales: <span id="dbg-orders" class="text-green-400 font-black">0</span></div>
     <div>👥 Lista final: <span id="dbg-final" class="text-white font-black">0</span></div>
-    <div id="dbg-last" class="text-gray-500 mt-1 truncate">Esperando...</div>
   </div>
-  <input oninput="searchC(this.value)" placeholder="🔍 Buscar cliente..." class="w-full bg-darkCard border border-darkBorder rounded-xl p-3.5 mb-4">
+  <input oninput="searchC(this.value)" placeholder="🔍 Buscar cliente por nombre o email..." class="w-full bg-darkCard border border-darkBorder rounded-xl p-3.5 mb-4 focus:border-cyan-500 outline-none">
   <div id="cList" class="space-y-3"></div>
 </section>
-<section id="sec-coupons" class="hidden"><div class="flex justify-between items-center mb-4"><h1 class="text-2xl font-black">Cupones</h1><button onclick="openCouponModal()" class="bg-neonCyan text-black px-4 py-2.5 rounded-xl text-sm font-bold">+ Cupón</button></div><div id="cpList" class="space-y-3"></div></section>
-<section id="sec-settings" class="hidden"><h1 class="text-2xl font-black mb-4">Ajustes</h1><div class="space-y-4">
-<div class="bg-darkCard border border-neonCyan/30 rounded-2xl p-5"><h3 class="font-bold text-sm mb-3 text-neonCyan">TIENDA</h3><input id="s_name" placeholder="Nombre tienda" class="w-full mb-3 bg-darkBg border border-darkBorder rounded-xl p-3.5"><input id="s_subtitle" placeholder="Subtitulo" class="w-full mb-3 bg-darkBg border border-neonPurple/20 rounded-xl p-3.5"><textarea id="s_hero" placeholder="Título hero" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 h-20 resize-none"></textarea><button onclick="saveStore()" class="w-full mt-2 bg-neonCyan text-black font-extrabold py-3 rounded-xl">💾 Guardar Tienda</button></div>
-<div class="bg-darkCard border border-cyan-500/30 rounded-2xl p-5"><h3 class="font-bold text-sm mb-3 text-cyan-400">🚀 SPLASH</h3><label class="flex items-center gap-3 text-sm mb-3 p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20"><input type="checkbox" id="s_splash_active" class="w-5 h-5 accent-cyan-400"><span class="font-bold">Activar Splash</span></label><input id="s_splash_title" placeholder="Título Ej: BIENVENIDO A JAVI GAMER" class="w-full mb-3 bg-darkBg border border-darkBorder rounded-xl p-3.5"><input id="s_splash_subtitle" placeholder="Subtítulo Ej: RECARGAS OFICIALES" class="w-full mb-3 bg-darkBg border border-darkBorder rounded-xl p-3.5"><input id="s_splash_text" placeholder="Texto Ej: Paraguay • 24/7" class="w-full mb-3 bg-darkBg border border-darkBorder rounded-xl p-3.5"><input id="s_splash_timer" type="number" placeholder="3" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5"><button onclick="saveSplash()" class="w-full mt-3 bg-cyan-400 text-black font-extrabold py-3 rounded-xl">💾 Guardar Splash</button></div>
-<div class="bg-darkCard border border-neonPurple/30 rounded-2xl p-5"><h3 class="font-bold text-sm mb-3 text-neonPurple">BANNER</h3><input id="s_banner_text" placeholder="Ej: ¡2x1 hoy!" class="w-full mb-3 bg-darkBg border border-darkBorder rounded-xl p-3.5"><label class="flex items-center gap-3 text-sm"><input type="checkbox" id="s_banner_active" class="w-5 h-5 accent-neonPurple"><span class="font-bold">Mostrar banner</span></label><button onclick="saveBanner()" class="w-full mt-3 bg-neonPurple text-white font-extrabold py-3 rounded-xl">💾 Guardar Banner</button></div>
-<div class="bg-darkCard border border-neonGreen/30 rounded-2xl p-5"><h3 class="font-bold text-sm mb-3 text-neonGreen">VENTAS Y VISIBILIDAD</h3>
-<label class="flex items-center gap-3 text-sm mb-2 p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20"><input type="checkbox" id="s_channels_active" checked class="w-5 h-5 accent-cyan-400"><span class="font-bold text-cyan-400">Mostrar Canales</span></label>
-<label class="flex items-center gap-3 text-sm mb-2 p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20"><input type="checkbox" id="s_rate_active" checked class="w-5 h-5 accent-yellow-400"><span class="font-bold text-yellow-400">Mostrar Tasa ₲</span></label>
-<label class="flex items-center gap-3 text-sm mb-2 p-3 rounded-xl bg-white/5 border border-white/10"><input type="checkbox" id="s_contact_active" checked class="w-5 h-5 accent-white"><span class="font-bold">Mostrar Contacto</span></label>
-<label class="flex items-center gap-3 text-sm mb-3 p-3 rounded-xl bg-white/5 border border-white/10"><input type="checkbox" id="s_legal_active" checked class="w-5 h-5 accent-white"><span class="font-bold">Mostrar Legales</span></label>
-<div class="h-px bg-white/10 my-3"></div>
-<label class="flex items-center gap-3 text-sm mb-2 p-3 rounded-xl bg-green-500/10 border border-green-500/20"><input type="checkbox" id="s_float_active" checked class="w-5 h-5 accent-green-500"><span class="font-bold text-green-400">Mostrar Flotante</span></label>
-<label class="flex items-center gap-3 text-sm mb-2 p-3 rounded-xl bg-green-500/10 border border-green-500/20"><input type="checkbox" id="s_float_whatsapp_active" checked class="w-5 h-5 accent-green-500"><span class="font-bold">Flotante WhatsApp</span></label>
-<label class="flex items-center gap-3 text-sm mb-4 p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20"><input type="checkbox" id="s_float_telegram_active" checked class="w-5 h-5 accent-cyan-400"><span class="font-bold text-cyan-400">Flotante Telegram</span></label>
-<input id="s_wpp" placeholder="595981... WhatsApp" class="w-full mb-3 bg-darkBg border border-darkBorder rounded-xl p-3.5">
-<input id="s_wpp_text" placeholder="Texto visible WhatsApp" class="w-full mb-3 bg-darkBg border border-darkBorder rounded-xl p-3.5">
-<input id="s_telegram" placeholder="Telegram @usuario" class="w-full mb-3 bg-darkBg border border-neonCyan/30 rounded-xl p-3.5">
-<input id="s_telegram_channel" placeholder="Link Canal Telegram" class="w-full mb-3 bg-darkBg border border-neonCyan/50 rounded-xl p-3.5">
-<input id="s_whatsapp_channel" placeholder="Link Canal WhatsApp" class="w-full mb-3 bg-darkBg border border-neonGreen/50 rounded-xl p-3.5">
-<input id="s_email" placeholder="Email" class="w-full mb-3 bg-darkBg border border-darkBorder rounded-xl p-3.5">
-<input id="s_location" placeholder="Ubicación" class="w-full mb-3 bg-darkBg border border-darkBorder rounded-xl p-3.5">
-<input id="s_service" placeholder="Descripción servicio" class="w-full mb-3 bg-darkBg border border-darkBorder rounded-xl p-3.5">
-<input id="s_rate" type="number" placeholder="7500" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5">
-<button onclick="saveContact()" class="w-full mt-3 bg-neonGreen text-black font-extrabold py-3 rounded-xl">💾 Guardar Todo</button>
+
+<section id="sec-coupons" class="hidden">
+  <div class="flex justify-between items-center mb-4"><h1 class="text-2xl font-black">Cupones</h1><button onclick="openCouponModal()" class="px-4 py-2.5 rounded-xl text-sm font-bold text-white btn-theme shadow-md">+ Cupón Pro</button></div>
+  <div id="cpList" class="space-y-3"></div>
+</section>
+
+<!-- SECCIÓN DE AJUSTES 100% REESTRUCTURADA, PROFESIONAL Y ORDENADA -->
+<section id="sec-settings" class="hidden">
+<div class="flex justify-between items-center mb-6">
+  <div>
+    <h1 class="text-2xl font-black tracking-tight">Panel de Ajustes Pro</h1>
+    <p class="text-[12px] text-gray-400 font-medium mt-0.5">Configuración avanzada del sistema, pasarelas de pago y apariencia general.</p>
+  </div>
 </div>
-<div class="bg-darkCard border border-neonCyan/20 rounded-2xl p-5"><h3 class="font-bold text-sm mb-3 text-neonCyan">FOOTER Y LEGALES</h3><textarea id="s_terms" placeholder="Términos" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 h-24 resize-none text-sm"></textarea><textarea id="s_privacy" placeholder="Privacidad" class="w-full mt-3 bg-darkBg border border-darkBorder rounded-xl p-3.5 h-24 resize-none text-sm"></textarea><textarea id="s_refund" placeholder="Reembolso" class="w-full mt-3 bg-darkBg border border-darkBorder rounded-xl p-3.5 h-24 resize-none text-sm"></textarea><button onclick="saveFooter()" class="w-full mt-3 bg-neonCyan/20 border border-neonCyan/30 text-neonCyan font-extrabold py-3 rounded-xl">💾 Guardar Legales</button></div>
-<div class="bg-darkCard border border-yellow-500/30 rounded-2xl p-5"><h3 class="font-bold text-sm mb-3 text-yellow-400">🛠️ CONFIG ESPECIAL LOG</h3><label class="flex items-center gap-3 text-sm p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20"><input type="checkbox" id="s_log_active" class="w-5 h-5 accent-yellow-400"><span class="font-bold">Mostrar Log Debug en Clientes (solo admin)</span></label><p class="text-[10px] text-gray-500 mt-2">Actívalo solo cuando quieras ver contadores internos. Por defecto queda oculto y limpio.</p><button onclick="saveLogConfig()" class="w-full mt-3 bg-yellow-500/20 border border-yellow-500/30 text-yellow-400 font-extrabold py-3 rounded-xl">💾 Guardar Log Config</button></div>
-<div class="bg-darkCard border border-neonGold/30 rounded-2xl p-5"><h3 class="font-bold text-sm mb-3 text-neonGold">SEGURIDAD</h3><input id="s_newpass" type="password" placeholder="Nueva contraseña admin" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5"><button onclick="saveSecurity()" class="w-full mt-3 bg-neonGold text-black font-extrabold py-3 rounded-xl">💾 Guardar Contraseña</button></div>
-</div></section>
+
+<div class="space-y-6">
+
+  <!-- BLOQUE 1: IDENTIDAD Y TEMA DE LA TIENDA -->
+  <div class="bg-darkCard rounded-2xl p-5 shadow-lg" style="border:1px solid color-mix(in srgb, var(--p1) 30%, transparent)">
+    <div class="flex items-center gap-3 mb-4 border-b border-white/10 pb-3">
+      <div class="w-8 h-8 rounded-xl flex items-center justify-center text-sm font-black" style="background:var(--p1); color:#fff"><i class="fa-solid fa-palette"></i></div>
+      <div>
+        <h3 class="font-black text-sm uppercase tracking-wider" style="color:var(--p1)">Identidad y Apariencia Visual</h3>
+        <p class="text-[11px] text-gray-400">Personaliza los colores globales y el nombre principal de la plataforma.</p>
+      </div>
+    </div>
+    <div class="space-y-3">
+      <div>
+        <label class="block text-[11px] font-black uppercase text-gray-400 mb-1.5">Color del Sistema (Tienda + Admin)</label>
+        <select id="s_theme" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 text-white font-bold focus:border-cyan-500 outline-none">
+          <option value="tema-rojo">🔴 Rojo Dominante</option>
+          <option value="tema-verde">🟢 Verde Esmeralda</option>
+          <option value="tema-rosado">💓 Rosado Neón</option>
+          <option value="tema-morado">🟣 Morado Real</option>
+          <option value="tema-amarillo">🟡 Amarillo Oro</option>
+          <option value="tema-azul">🔵 Azul Eléctrico</option>
+          <option value="tema-cyan">💎 Cyan Cripto / Gaming</option>
+        </select>
+      </div>
+      <button onclick="saveTheme()" class="w-full mt-2 font-extrabold py-3.5 rounded-xl text-white btn-theme shadow-md transition hover:opacity-9">💾 Guardar Configuración de Tema</button>
+    </div>
+  </div>
+
+  <!-- BLOQUE 2: INFORMACIÓN DE LA TIENDA -->
+  <div class="bg-darkCard border border-darkBorder rounded-2xl p-5 shadow-lg">
+    <div class="flex items-center gap-3 mb-4 border-b border-white/10 pb-3">
+      <div class="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-black"><i class="fa-solid fa-store"></i></div>
+      <div>
+        <h3 class="font-black text-sm uppercase tracking-wider text-purple-400">Datos Principales de la Tienda</h3>
+        <p class="text-[11px] text-gray-400">Encabezados principales visibles en la interfaz del cliente.</p>
+      </div>
+    </div>
+    <div class="space-y-3">
+      <div>
+        <label class="block text-[11px] font-black uppercase text-gray-400 mb-1">Nombre de la Tienda</label>
+        <input id="s_name" placeholder="Ej: JaviGamer Store" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 focus:border-cyan-500 outline-none">
+      </div>
+      <div>
+        <label class="block text-[11px] font-black uppercase text-gray-400 mb-1">Subtítulo Descriptivo</label>
+        <input id="s_subtitle" placeholder="Ej: Recargas Instantáneas 24/7" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 focus:border-cyan-500 outline-none">
+      </div>
+      <div>
+        <label class="block text-[11px] font-black uppercase text-gray-400 mb-1">Título Hero (Principal)</label>
+        <textarea id="s_hero" placeholder="Título principal de bienvenida..." class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 h-20 focus:border-cyan-500 outline-none"></textarea>
+      </div>
+      <button onclick="saveStore()" class="w-full mt-2 font-extrabold py-3.5 rounded-xl text-white btn-theme shadow-md transition">💾 Guardar Datos de Tienda</button>
+    </div>
+  </div>
+
+  <!-- BLOQUE 3: MÉTODOS DE PAGO OCULTABLES Y DETALLADOS -->
+  <div class="bg-darkCard border border-cyan-500/30 rounded-2xl p-5 shadow-lg">
+    <div class="flex items-center gap-3 mb-4 border-b border-white/10 pb-3">
+      <div class="w-8 h-8 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm font-black"><i class="fa-solid fa-credit-card"></i></div>
+      <div>
+        <h3 class="font-black text-sm uppercase tracking-wider text-cyan-400">Pasarelas y Métodos de Pago</h3>
+        <p class="text-[11px] text-gray-400">Configura credenciales, enlaces de logos e interruptores de visibilidad para el cliente.</p>
+      </div>
+    </div>
+
+    <div class="space-y-4">
+      <!-- Transferencia -->
+      <div class="bg-darkBg border border-white/10 rounded-xl p-4">
+        <div class="flex justify-between items-center mb-3">
+          <div class="flex items-center gap-2"><i class="fa-solid fa-building-columns text-cyan-400"></i><span class="font-bold text-xs uppercase tracking-wider">Transferencia Bancaria</span></div>
+          <label class="flex items-center gap-2 text-[11px] font-bold text-cyan-300 bg-cyan-500/10 px-3 py-1 rounded-lg border border-cyan-500/20 cursor-pointer"><input type="checkbox" id="pay_transfer_active" checked class="w-4 h-4 accent-cyan-400"> Visible en Tienda</label>
+        </div>
+        <div class="space-y-2">
+          <input id="pay_transfer_name" placeholder="Título Ej: Transferencia Bancaria" class="w-full bg-darkCard border border-darkBorder rounded-xl p-3 text-xs">
+          <input id="pay_transfer_image" placeholder="URL del logo del banco (https://...)" class="w-full bg-darkCard border border-darkBorder rounded-xl p-3 text-xs">
+          <textarea id="pay_transfer_details" placeholder="Datos bancarios detallados (Banco, Nro de cuenta, C.I., Titular)..." class="w-full bg-darkCard border border-darkBorder rounded-xl p-3 text-xs h-20"></textarea>
+        </div>
+      </div>
+
+      <!-- Tigo Money -->
+      <div class="bg-darkBg border border-green-500/20 rounded-xl p-4">
+        <div class="flex justify-between items-center mb-3">
+          <div class="flex items-center gap-2"><i class="fa-solid fa-mobile text-green-400"></i><span class="font-bold text-xs uppercase tracking-wider">Tigo Money</span></div>
+          <label class="flex items-center gap-2 text-[11px] font-bold text-green-300 bg-green-500/10 px-3 py-1 rounded-lg border border-green-500/20 cursor-pointer"><input type="checkbox" id="pay_tigo_active" checked class="w-4 h-4 accent-green-500"> Visible en Tienda</label>
+        </div>
+        <div class="space-y-2">
+          <input id="pay_tigo_name" placeholder="Título Ej: Tigo Money" class="w-full bg-darkCard border border-darkBorder rounded-xl p-3 text-xs">
+          <input id="pay_tigo_image" placeholder="URL del logo Tigo Money (https://...)" class="w-full bg-darkCard border border-darkBorder rounded-xl p-3 text-xs">
+          <textarea id="pay_tigo_details" placeholder="Número de línea y titular autorizados para giro..." class="w-full bg-darkCard border border-darkBorder rounded-xl p-3 text-xs h-20"></textarea>
+        </div>
+      </div>
+
+      <!-- Binance Pay -->
+      <div class="bg-darkBg border border-yellow-400/30 rounded-xl p-4">
+        <div class="flex justify-between items-center mb-3">
+          <div class="flex items-center gap-2"><i class="fa-brands fa-bitcoin text-yellow-400"></i><span class="font-bold text-xs uppercase tracking-wider">Binance Pay / Cripto</span></div>
+          <label class="flex items-center gap-2 text-[11px] font-bold text-yellow-300 bg-yellow-500/10 px-3 py-1 rounded-lg border border-yellow-500/20 cursor-pointer"><input type="checkbox" id="pay_binance_active" class="w-4 h-4 accent-yellow-400"> Visible en Tienda</label>
+        </div>
+        <div class="space-y-2">
+          <input id="pay_binance_name" placeholder="Título Ej: Binance Pay" class="w-full bg-darkCard border border-darkBorder rounded-xl p-3 text-xs">
+          <input id="pay_binance_image" placeholder="URL del logo Binance (https://...)" class="w-full bg-darkCard border border-darkBorder rounded-xl p-3 text-xs">
+          <textarea id="pay_binance_details" placeholder="Pay ID, Correo asociado o Red (BEP20 USDT)..." class="w-full bg-darkCard border border-darkBorder rounded-xl p-3 text-xs h-20"></textarea>
+        </div>
+      </div>
+
+      <button onclick="savePayments()" class="w-full mt-2 bg-cyan-500 text-black font-extrabold py-3.5 rounded-xl shadow-lg transition hover:bg-cyan-400">💾 Guardar Métodos de Pago</button>
+    </div>
+  </div>
+
+  <!-- BLOQUE 4: SPLASH SCREEN -->
+  <div class="bg-darkCard border border-cyan-500/30 rounded-2xl p-5 shadow-lg">
+    <div class="flex items-center gap-3 mb-4 border-b border-white/10 pb-3">
+      <div class="w-8 h-8 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm font-black"><i class="fa-solid fa-bolt"></i></div>
+      <div>
+        <h3 class="font-black text-sm uppercase tracking-wider text-cyan-400">Pantalla de Carga (Splash Screen)</h3>
+        <p class="text-[11px] text-gray-400">Configura la bienvenida emergente al ingresar a la tienda.</p>
+      </div>
+    </div>
+    <div class="space-y-3">
+      <label class="flex items-center gap-3 text-sm p-3.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 cursor-pointer"><input type="checkbox" id="s_splash_active" class="w-5 h-5 accent-cyan-400"><span class="font-bold text-cyan-300">Activar Splash Screen</span></label>
+      <div><label class="block text-[11px] font-black uppercase text-gray-400 mb-1">Título del Splash</label><input id="s_splash_title" placeholder="Título principal" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 focus:border-cyan-500 outline-none"></div>
+      <div><label class="block text-[11px] font-black uppercase text-gray-400 mb-1">Subtítulo</label><input id="s_splash_subtitle" placeholder="Subtítulo descriptivo" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 focus:border-cyan-500 outline-none"></div>
+      <div><label class="block text-[11px] font-black uppercase text-gray-400 mb-1">Mensaje o Anuncio</label><input id="s_splash_text" placeholder="Texto informativo" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 focus:border-cyan-500 outline-none"></div>
+      <div><label class="block text-[11px] font-black uppercase text-gray-400 mb-1">Duración en segundos</label><input id="s_splash_timer" type="number" placeholder="3" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 focus:border-cyan-500 outline-none"></div>
+      <button onclick="saveSplash()" class="w-full mt-2 bg-cyan-400 text-black font-extrabold py-3.5 rounded-xl shadow-lg transition hover:bg-cyan-300">💾 Guardar Configuración de Splash</button>
+    </div>
+  </div>
+
+  <!-- BLOQUE 5: BANNER ANUNCIOS -->
+  <div class="bg-darkCard border border-purple-500/30 rounded-2xl p-5 shadow-lg">
+    <div class="flex items-center gap-3 mb-4 border-b border-white/10 pb-3">
+      <div class="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-black"><i class="fa-solid fa-bullhorn"></i></div>
+      <div>
+        <h3 class="font-black text-sm uppercase tracking-wider text-purple-400">Banner de Anuncios Superior</h3>
+        <p class="text-[11px] text-gray-400">Mensaje dinámico visible en la parte más alta de la tienda.</p>
+      </div>
+    </div>
+    <div class="space-y-3">
+      <div><label class="block text-[11px] font-black uppercase text-gray-400 mb-1">Texto del Banner</label><input id="s_banner_text" placeholder="Ej: ¡Promoción especial 2x1 en diamantes hoy!" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 focus:border-cyan-500 outline-none"></div>
+      <label class="flex items-center gap-3 text-sm p-3.5 rounded-xl bg-purple-500/10 border border-purple-500/20 cursor-pointer"><input type="checkbox" id="s_banner_active" class="w-5 h-5 accent-purple-400"><span class="font-bold text-purple-300">Mostrar Banner en la Tienda</span></label>
+      <button onclick="saveBanner()" class="w-full mt-2 bg-purple-500 text-white font-extrabold py-3.5 rounded-xl shadow-lg transition hover:bg-purple-600">💾 Guardar Banner</button>
+    </div>
+  </div>
+
+  <!-- BLOQUE 6: CANALES, TASA Y CONTACTO -->
+  <div class="bg-darkCard border border-green-500/30 rounded-2xl p-5 shadow-lg">
+    <div class="flex items-center gap-3 mb-4 border-b border-white/10 pb-3">
+      <div class="w-8 h-8 rounded-xl bg-green-500/20 text-green-400 flex items-center justify-center text-sm font-black"><i class="fa-solid fa-sliders"></i></div>
+      <div>
+        <h3 class="font-black text-sm uppercase tracking-wider text-green-400">Ventas, Canales y Tasa de Cambio (₲)</h3>
+        <p class="text-[11px] text-gray-400">Controla la tasa de conversión oficial USD a Guaraníes y canales de contacto.</p>
+      </div>
+    </div>
+
+    <div class="space-y-3">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <label class="flex items-center gap-3 text-sm p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 cursor-pointer"><input type="checkbox" id="s_channels_active" checked class="w-5 h-5 accent-cyan-400"><span class="font-bold text-cyan-300 text-xs">Mostrar Canales</span></label>
+        <label class="flex items-center gap-3 text-sm p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20 cursor-pointer"><input type="checkbox" id="s_rate_active" checked class="w-5 h-5 accent-yellow-400"><span class="font-bold text-yellow-300 text-xs">Mostrar Tasa ₲</span></label>
+        <label class="flex items-center gap-3 text-sm p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer"><input type="checkbox" id="s_contact_active" checked class="w-5 h-5 accent-white"><span class="font-bold text-xs">Mostrar Contacto</span></label>
+        <label class="flex items-center gap-3 text-sm p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer"><input type="checkbox" id="s_legal_active" checked class="w-5 h-5 accent-white"><span class="font-bold text-xs">Mostrar Legales</span></label>
+      </div>
+
+      <div class="h-px bg-white/10 my-2"></div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <label class="flex items-center gap-3 text-sm p-3 rounded-xl bg-green-500/10 border border-green-500/20 cursor-pointer"><input type="checkbox" id="s_float_active" checked class="w-5 h-5 accent-green-500"><span class="font-bold text-green-400 text-xs">Flotante General</span></label>
+        <label class="flex items-center gap-3 text-sm p-3 rounded-xl bg-green-500/10 border border-green-500/20 cursor-pointer"><input type="checkbox" id="s_float_whatsapp_active" checked class="w-5 h-5 accent-green-500"><span class="font-bold text-xs">Flotante WhatsApp</span></label>
+        <label class="flex items-center gap-3 text-sm p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 cursor-pointer"><input type="checkbox" id="s_float_telegram_active" checked class="w-5 h-5 accent-cyan-400"><span class="font-bold text-cyan-300 text-xs">Flotante Telegram</span></label>
+      </div>
+
+      <div class="space-y-3 pt-2">
+        <div><label class="block text-[11px] font-black uppercase text-gray-400 mb-1">WhatsApp de Soporte (con código de país)</label><input id="s_wpp" placeholder="Ej: 595981123456" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 focus:border-cyan-500 outline-none"></div>
+        <div><label class="block text-[11px] font-black uppercase text-gray-400 mb-1">Texto visible botón WhatsApp</label><input id="s_wpp_text" placeholder="Ej: Escríbenos al Soporte" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 focus:border-cyan-500 outline-none"></div>
+        <div><label class="block text-[11px] font-black uppercase text-gray-400 mb-1">Usuario Telegram</label><input id="s_telegram" placeholder="Ej: @JaviGamer" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 focus:border-cyan-500 outline-none"></div>
+        <div><label class="block text-[11px] font-black uppercase text-gray-400 mb-1">Link Canal Telegram</label><input id="s_telegram_channel" placeholder="https://t.me/..." class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 focus:border-cyan-500 outline-none"></div>
+        <div><label class="block text-[11px] font-black uppercase text-gray-400 mb-1">Link Canal WhatsApp</label><input id="s_whatsapp_channel" placeholder="https://whatsapp.com/channel/..." class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 focus:border-cyan-500 outline-none"></div>
+        <div><label class="block text-[11px] font-black uppercase text-gray-400 mb-1">Correo de Soporte</label><input id="s_email" placeholder="soporte@javigamer.com" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 focus:border-cyan-500 outline-none"></div>
+        <div><label class="block text-[11px] font-black uppercase text-gray-400 mb-1">Ubicación Física / País</label><input id="s_location" placeholder="Asunción, Paraguay" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 focus:border-cyan-500 outline-none"></div>
+        <div><label class="block text-[11px] font-black uppercase text-gray-400 mb-1">Descripción del Servicio</label><input id="s_service" placeholder="Recargas de Videojuegos Oficiales" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 focus:border-cyan-500 outline-none"></div>
+        <div><label class="block text-[11px] font-black uppercase text-gray-400 mb-1 font-bold text-yellow-400">Tasa de Cambio Oficial (1 USD = ₲)</label><input id="s_rate" type="number" placeholder="7500" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 focus:border-cyan-500 outline-none font-bold text-yellow-300"></div>
+      </div>
+
+      <button onclick="saveContact()" class="w-full mt-3 bg-green-500 text-black font-extrabold py-3.5 rounded-xl shadow-lg transition hover:bg-green-400">💾 Guardar Parámetros de Contacto y Tasa</button>
+    </div>
+  </div>
+
+  <!-- BLOQUE 7: FOOTER Y LEGALES -->
+  <div class="bg-darkCard border border-darkBorder rounded-2xl p-5 shadow-lg">
+    <div class="flex items-center gap-3 mb-4 border-b border-white/10 pb-3">
+      <div class="w-8 h-8 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-black"><i class="fa-solid fa-file-contract"></i></div>
+      <div>
+        <h3 class="font-black text-sm uppercase tracking-wider text-blue-400">Políticas, Términos y Legales</h3>
+        <p class="text-[11px] text-gray-400">Redacta los textos legales y condiciones del servicio.</p>
+      </div>
+    </div>
+    <div class="space-y-3">
+      <div><label class="block text-[11px] font-black uppercase text-gray-400 mb-1">Términos y Condiciones</label><textarea id="s_terms" placeholder="Redacta los términos..." class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 h-24 focus:border-cyan-500 outline-none text-sm"></textarea></div>
+      <div><label class="block text-[11px] font-black uppercase text-gray-400 mb-1">Política de Privacidad</label><textarea id="s_privacy" placeholder="Redacta la privacidad..." class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 h-24 focus:border-cyan-500 outline-none text-sm"></textarea></div>
+      <div><label class="block text-[11px] font-black uppercase text-gray-400 mb-1">Política de Reembolso</label><textarea id="s_refund" placeholder="Redacta los reembolsos..." class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 h-24 focus:border-cyan-500 outline-none text-sm"></textarea></div>
+      <button onclick="saveFooter()" class="w-full mt-2 font-extrabold py-3.5 rounded-xl text-white shadow-lg transition" style="background:color-mix(in srgb, var(--p1) 25%, transparent);border:1px solid color-mix(in srgb, var(--p1) 40%, transparent);color:var(--p1)">💾 Guardar Textos Legales</button>
+    </div>
+  </div>
+
+  <!-- BLOQUE 8: CONFIGURACIÓN DE LOGS DE DEPURACIÓN -->
+  <div class="bg-darkCard border border-yellow-500/30 rounded-2xl p-5 shadow-lg">
+    <div class="flex items-center gap-3 mb-4 border-b border-white/10 pb-3">
+      <div class="w-8 h-8 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-sm font-black"><i class="fa-solid fa-bug"></i></div>
+      <div>
+        <h3 class="font-black text-sm uppercase tracking-wider text-yellow-400">Depuración y Registros (Log)</h3>
+        <p class="text-[11px] text-gray-400">Herramientas de diagnóstico técnico.</p>
+      </div>
+    </div>
+    <div class="space-y-3">
+      <label class="flex items-center gap-3 text-sm p-3.5 rounded-xl bg-yellow-500/10 border border-yellow-500/20 cursor-pointer"><input type="checkbox" id="s_log_active" class="w-5 h-5 accent-yellow-400"><span class="font-bold text-yellow-300">Mostrar Consola de Log Debug en Clientes</span></label>
+      <button onclick="saveLogConfig()" class="w-full mt-2 bg-yellow-500/20 border border-yellow-500/30 text-yellow-400 font-extrabold py-3.5 rounded-xl shadow-lg transition hover:bg-yellow-500/30">💾 Guardar Configuración de Log</button>
+    </div>
+  </div>
+
+</div>
+</section>
 </main>
 </div>
-<div id="pModal" class="hidden fixed inset-0 z-[60] bg-black/85 p-4 flex items-end justify-center overflow-y-auto"><div class="bg-darkCard border border-darkBorder rounded-3xl p-6 w-full max-w-md my-auto max-h-[90vh] overflow-y-auto"><h3 class="font-black mb-4">Producto</h3><input type="hidden" id="pf_id"><input id="pf_name" placeholder="Nombre * Ej: 100 Diamantes" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 mb-3"><div class="bg-darkBg border border-darkBorder rounded-2xl p-3 mb-3"><label class="text-[11px] font-black uppercase text-gray-500">Categoría / Juego</label><div class="flex gap-2 mt-2"><select id="pf_game" class="flex-1 bg-darkCard border border-darkBorder rounded-xl p-3.5"></select><button onclick="document.getElementById('newCatBox').classList.toggle('hidden')" type="button" class="px-3 rounded-xl bg-neonCyan text-black font-black text-xs">+ Nueva</button></div><div id="newCatBox" class="hidden mt-3 p-3 rounded-xl bg-black/40 border border-neonCyan/20"><input id="newCatName" placeholder="Nombre Ej: Roblox" class="w-full bg-darkCard border border-darkBorder rounded-xl p-3 text-sm"><button onclick="createCatInline()" type="button" class="w-full mt-2 py-2.5 rounded-xl bg-neonCyan text-black font-bold text-xs">Crear categoría ahora</button></div></div><div class="bg-darkBg border border-darkBorder rounded-2xl p-4 mb-3"><label class="text-[11px] font-black uppercase text-gray-500">Precio</label><div class="grid grid-cols-2 gap-3 mt-2"><input id="pf_usd" type="number" step="0.01" placeholder="$ USD opcional" class="bg-darkCard border border-darkBorder rounded-xl p-3.5" oninput="calcPrices('usd')"><input id="pf_pyg" type="number" placeholder="₲ Ej: 10000" class="bg-darkCard border border-darkBorder rounded-xl p-3.5" oninput="calcPrices('pyg')"></div></div><div class="bg-darkBg border border-darkBorder rounded-2xl p-4 mb-3"><label class="text-[11px] font-bold text-gray-400 uppercase">Imagen URL</label><input id="pf_img" placeholder="https://..." class="w-full mt-2 bg-darkCard border border-darkBorder rounded-xl p-3.5 text-xs"><img id="pf_preview" class="hidden mt-3 w-full h-40 object-cover rounded-xl border border-darkBorder bg-darkBg"></div><label class="flex items-center gap-3 p-4 rounded-2xl bg-neonCyan/10 border border-neonCyan/20 mb-4 cursor-pointer"><input type="checkbox" id="pf_isOffer" class="w-5 h-5 accent-neonCyan"><span class="text-sm font-bold"><span class="text-neonCyan">¿Es Oferta Especial?</span></span></label><div class="grid grid-cols-2 gap-3"><button onclick="closeProd()" class="py-3.5 bg-darkBg border border-darkBorder rounded-xl font-bold">Cancelar</button><button onclick="saveProd()" id="btnProd" class="py-3.5 bg-neonCyan text-black font-extrabold rounded-xl">Guardar</button></div></div></div>
-<div id="catModal" class="hidden fixed inset-0 z-[60] bg-black/85 p-4 flex items-end justify-center"><div class="bg-darkCard border border-darkBorder rounded-3xl p-6 w-full max-w-md"><h3 class="font-black mb-4">Catálogo</h3><input type="hidden" id="cf_id"><input id="cf_name" placeholder="Nombre: Free Fire *" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 mb-3"><input id="cf_slug" placeholder="slug: freefire *" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 mb-3"><div class="grid grid-cols-2 gap-3 mb-3"><select id="cf_icon" class="bg-darkBg border border-darkBorder rounded-xl p-3.5"><option value="fa-fire">🔥 Fire</option><option value="fa-crosshairs">🎯 Cross</option><option value="fa-cube">📦 Cube</option><option value="fa-shield-halved">🛡️ Shield</option><option value="fa-gem">💎 Gem</option><option value="fa-star">⭐ Star</option><option value="fa-gamepad">🎮 Pad</option></select><select id="cf_color" class="bg-darkBg border border-darkBorder rounded-xl p-3.5"><option value="text-amber-500">Ambar</option><option value="text-cyan-400">Cyan</option><option value="text-red-400">Rojo</option><option value="text-purple-400">Morado</option><option value="text-green-400">Verde</option></select></div><div class="grid grid-cols-2 gap-3"><button onclick="document.getElementById('catModal').classList.add('hidden')" class="py-3.5 bg-darkBg border border-darkBorder rounded-xl font-bold">Cancelar</button><button onclick="saveCat()" class="py-3.5 bg-neonCyan text-black font-extrabold rounded-xl">Guardar</button></div></div></div>
-<div id="couponModal" class="hidden fixed inset-0 z-[60] bg-black/85 p-4 flex items-end justify-center"><div class="bg-darkCard border border-darkBorder rounded-3xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto"><h3 class="font-black mb-4">Cupón PRO</h3><input type="hidden" id="cp_id"><input id="cp_code" placeholder="Código EJ: NEXUS10" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 mb-3 font-bold uppercase"><div class="grid grid-cols-2 gap-3 mb-3"><select id="cp_type" class="bg-darkBg border border-darkBorder rounded-xl p-3.5"><option value="percent">% Porcentaje</option><option value="fixed">₲ Monto fijo</option></select><input id="cp_value" type="number" placeholder="Valor Ej: 10" class="bg-darkBg border border-darkBorder rounded-xl p-3.5"></div><div class="grid grid-cols-2 gap-3 mb-3"><input id="cp_max" type="number" placeholder="Max usos (0=∞)" class="bg-darkBg border border-darkBorder rounded-xl p-3.5"><input id="cp_min" type="number" placeholder="Mínimo $ (0=no)" class="bg-darkBg border border-darkBorder rounded-xl p-3.5"></div><input id="cp_exp" type="date" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 mb-3"><label class="flex items-center gap-2 mb-3 text-sm"><input type="checkbox" id="cp_active" checked class="w-5 h-5 accent-neonCyan"> Activo</label><label class="flex items-center gap-2 mb-4 text-sm p-3 rounded-xl bg-neonCyan/10 border border-neonCyan/20"><input type="checkbox" id="cp_onePerUser" class="w-5 h-5 accent-neonCyan"><span class="font-bold text-neonCyan">Solo 1 uso por usuario</span></label><div class="grid grid-cols-2 gap-3"><button onclick="closeCouponModal()" class="py-3.5 bg-darkBg border border-darkBorder rounded-xl font-bold">Cancelar</button><button onclick="saveCoupon()" id="btnCp" class="py-3.5 bg-neonCyan text-black font-extrabold rounded-xl">Guardar Cupón</button></div></div></div>
+
+<!-- MODAL DE CARGA Y GESTIÓN DE PRODUCTOS ORDENADO Y EXigENTE -->
+<div id="pModal" class="hidden fixed inset-0 z-[60] bg-black/85 p-4 flex items-center justify-center overflow-y-auto backdrop-blur-sm">
+  <div class="bg-darkCard border border-darkBorder rounded-3xl p-6 w-full max-w-lg my-auto max-h-[90vh] overflow-y-auto shadow-2xl">
+    <div class="flex justify-between items-center mb-4 border-b border-white/10 pb-3">
+      <div>
+        <h3 class="font-black text-base uppercase tracking-wider text-cyan-400"><i class="fa-solid fa-box mr-2"></i>Gestión Detallada de Producto</h3>
+        <p class="text-[11px] text-gray-400">Completa cada parámetro con precisión para la tienda.</p>
+      </div>
+      <button onclick="closeProd()" class="w-8 h-8 rounded-lg bg-darkBg border border-darkBorder flex items-center justify-center text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <input type="hidden" id="pf_id">
+    
+    <div class="space-y-4">
+      <div>
+        <label class="block text-[11px] font-black uppercase text-gray-400 mb-1">Nombre del Paquete / Recarga *</label>
+        <input id="pf_name" placeholder="Ej: 100 Diamantes + 10% Bonus / 60 UC" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 focus:border-cyan-500 outline-none font-bold">
+      </div>
+      
+      <div class="bg-darkBg border border-darkBorder rounded-2xl p-4">
+        <label class="block text-[11px] font-black uppercase text-gray-400 mb-2">Categoría / Juego Asociado *</label>
+        <div class="flex gap-2">
+          <select id="pf_game" class="flex-1 bg-darkCard border border-darkBorder rounded-xl p-3.5 text-sm focus:border-cyan-500 outline-none font-bold" onchange="autoSelectCurrency()"></select>
+          <button onclick="document.getElementById('newCatBox').classList.toggle('hidden')" type="button" class="px-4 rounded-xl font-black text-xs text-white btn-theme shadow-md">+ Crear</button>
+        </div>
+        <div id="newCatBox" class="hidden mt-3 p-3.5 rounded-xl bg-black/40 border space-y-2" style="border-color:color-mix(in srgb, var(--p1) 30%, transparent)">
+          <input id="newCatName" placeholder="Nombre juego Ej: Roblox" class="w-full bg-darkCard border border-darkBorder rounded-xl p-3 text-xs">
+          <input id="newCatCurrency" placeholder="Moneda Ej: Robux, Diamantes, UC" class="w-full bg-darkCard border border-darkBorder rounded-xl p-3 text-xs">
+          <button onclick="createCatInline()" type="button" class="w-full py-2.5 rounded-xl font-bold text-xs text-white btn-theme">Guardar y Seleccionar Categoría</button>
+        </div>
+      </div>
+
+      <!-- SELECCIÓN DE TIPO DE MONEDA Y RECOMENDACIÓN DE JUEGOS POPULARES -->
+      <div class="bg-darkBg border border-cyan-500/30 rounded-2xl p-4">
+        <label class="block text-[11px] font-black uppercase text-cyan-400 mb-1">🪙 Configuración de Moneda / Divisa</label>
+        <p class="text-[10px] text-gray-400 mb-3">Selecciona la moneda o utiliza las recomendaciones rápidas para autocompletar.</p>
+        
+        <select id="pf_currency" class="w-full bg-darkCard border border-darkBorder rounded-xl p-3.5 text-sm text-cyan-300 font-bold mb-3 focus:border-cyan-500 outline-none">
+          <option value="Diamantes">💎 Diamantes (Ej: Free Fire)</option>
+          <option value="UC">🪙 UC (Ej: PUBG Mobile)</option>
+          <option value="Robux">🤖 Robux (Ej: Roblox)</option>
+          <option value="V-Bucks">⭐ V-Bucks (Ej: Fortnite)</option>
+          <option value="Monedas">💰 Monedas / CP (Ej: Call of Duty)</option>
+          <option value="Gemas">🔮 Gemas / Cristales</option>
+          <option value="Pase">🎫 Pase de Batalla</option>
+        </select>
+
+        <div class="text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-wider">Recomendaciones de Juegos Populares (Clic para autocompletar):</div>
+        <div class="grid grid-cols-3 gap-2 text-center text-[10px]">
+          <button type="button" onclick="applyGameRecommendation('Free Fire', 'Diamantes', 'https://images.garena.com/ui/ff/common/freefire_icon.png')" class="bg-darkCard border border-darkBorder p-2.5 rounded-xl hover:border-cyan-400 transition">
+            <div class="font-bold text-cyan-300">🔥 Free Fire</div>
+            <div class="text-gray-500 text-[9px]">Diamantes</div>
+          </button>
+          <button type="button" onclick="applyGameRecommendation('PUBG Mobile', 'UC', 'https://w7.pngwing.com/pngs/415/786/png-transparent-pubg-mobile-uc-pubg-mobile-unknown-cash-icon-thumbnail.png')" class="bg-darkCard border border-darkBorder p-2.5 rounded-xl hover:border-cyan-400 transition">
+            <div class="font-bold text-yellow-300">🎯 PUBG</div>
+            <div class="text-gray-500 text-[9px]">UC</div>
+          </button>
+          <button type="button" onclick="applyGameRecommendation('Roblox', 'Robux', 'https://images.rbxcdn.com/3d6928e469796030c25a075d9e50d75a.png')" class="bg-darkCard border border-darkBorder p-2.5 rounded-xl hover:border-cyan-400 transition">
+            <div class="font-bold text-red-400">🤖 Roblox</div>
+            <div class="text-gray-500 text-[9px]">Robux</div>
+          </button>
+          <button type="button" onclick="applyGameRecommendation('Fortnite', 'V-Bucks', 'https://yt3.googleusercontent.com/ytc/AIdro_k4m151...=s90-c')" class="bg-darkCard border border-darkBorder p-2.5 rounded-xl hover:border-cyan-400 transition">
+            <div class="font-bold text-purple-300">⭐ Fortnite</div>
+            <div class="text-gray-500 text-[9px]">V-Bucks</div>
+          </button>
+          <button type="button" onclick="applyGameRecommendation('Call of Duty', 'CP', 'https://w7.pngwing.com/pngs/586/465/png-transparent-call-of-duty-mobile-hd-logo.png')" class="bg-darkCard border border-darkBorder p-2.5 rounded-xl hover:border-cyan-400 transition">
+            <div class="font-bold text-green-400">🎖️ COD Mobile</div>
+            <div class="text-gray-500 text-[9px]">CP Points</div>
+          </button>
+          <button type="button" onclick="applyGameRecommendation('Brawl Stars', 'Gemas', 'https://w7.pngwing.com/pngs/998/1020/png-transparent-brawl-stars-gem-thumbnail.png')" class="bg-darkCard border border-darkBorder p-2.5 rounded-xl hover:border-cyan-400 transition">
+            <div class="font-bold text-blue-400">⭐ Brawl Stars</div>
+            <div class="text-gray-500 text-[9px]">Gemas</div>
+          </button>
+        </div>
+      </div>
+
+      <div class="bg-darkBg border border-darkBorder rounded-2xl p-4">
+        <label class="block text-[11px] font-black uppercase text-gray-400 mb-2">Precio Real de Venta *</label>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[10px] text-gray-500 mb-1">Dólares ($ USD)</label>
+            <input id="pf_usd" type="number" step="0.01" placeholder="$ 0.00" class="w-full bg-darkCard border border-darkBorder rounded-xl p-3.5 focus:border-cyan-500 outline-none font-bold" oninput="calcPrices('usd');updateOffPreview()">
+          </div>
+          <div>
+            <label class="block text-[10px] text-gray-500 mb-1">Guaraníes (₲ PYG)</label>
+            <input id="pf_pyg" type="number" placeholder="₲ 0" class="w-full bg-darkCard border border-darkBorder rounded-xl p-3.5 focus:border-cyan-500 outline-none font-bold text-green-400" oninput="calcPrices('pyg');updateOffPreview()">
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-darkBg border border-amber-500/20 rounded-2xl p-4">
+        <label class="block text-[11px] font-black uppercase text-amber-400 mb-1">🔥 Precio Anterior / Tachado (Para % OFF)</label>
+        <p class="text-[10px] text-gray-400 mb-2">Si configuras un valor mayor al precio real, se calculará automáticamente el porcentaje de descuento.</p>
+        <div class="grid grid-cols-2 gap-3 items-center">
+          <input id="pf_old_usd" type="number" step="0.01" placeholder="$ Antes Ej: 10.00" class="w-full bg-darkCard border border-amber-500/20 rounded-xl p-3.5 focus:border-amber-400 outline-none font-bold" oninput="updateOffPreview()">
+          <div id="off-preview" class="bg-black/40 border border-amber-500/20 py-3.5 rounded-xl flex items-center justify-center text-[12px] font-black tracking-wider" style="color:var(--p1)">0% OFF</div>
+        </div>
+      </div>
+
+      <div class="bg-darkBg border border-darkBorder rounded-2xl p-4">
+        <label class="block text-[11px] font-bold text-gray-400 uppercase mb-1">URL de la Imagen / Ícono del Paquete</label>
+        <input id="pf_img" placeholder="https://..." class="w-full bg-darkCard border border-darkBorder rounded-xl p-3.5 text-xs focus:border-cyan-500 outline-none">
+        <img id="pf_preview" class="hidden mt-3 w-full h-36 object-cover rounded-xl border border-darkBorder bg-darkBg">
+      </div>
+
+      <label class="flex items-center gap-3 p-4 rounded-2xl cursor-pointer transition hover:opacity-9" style="background:color-mix(in srgb, var(--p1) 12%, transparent);border:1px solid color-mix(in srgb, var(--p1) 25%, transparent)">
+        <input type="checkbox" id="pf_isOffer" class="w-5 h-5 accent-cyan-400">
+        <span class="text-sm font-extrabold tracking-wide" style="color:var(--p1)">⭐ Marcar como Oferta Especial Destacada</span>
+      </label>
+
+      <div class="grid grid-cols-2 gap-3 pt-2">
+        <button onclick="closeProd()" type="button" class="py-3.5 bg-darkBg border border-darkBorder rounded-xl font-bold transition hover:bg-darkBorder">Cancelar</button>
+        <button onclick="saveProd()" id="btnProd" type="button" class="py-3.5 font-extrabold rounded-xl text-white btn-theme shadow-lg transition">Guardar Producto</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="catModal" class="hidden fixed inset-0 z-[60] bg-black/85 p-4 flex items-center justify-center backdrop-blur-sm"><div class="bg-darkCard border border-darkBorder rounded-3xl p-6 w-full max-w-md shadow-2xl"><h3 class="font-black mb-4 uppercase text-sm tracking-wider" style="color:var(--p1)">Gestión de Catálogo</h3><input type="hidden" id="cf_id"><input id="cf_name" placeholder="Nombre Ej: Free Fire *" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 mb-3"><input id="cf_slug" placeholder="Slug Ej: freefire *" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 mb-3"><input id="cf_currency" placeholder="Moneda por defecto Ej: Diamantes" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 mb-3"><div class="grid grid-cols-2 gap-3 mb-4"><select id="cf_icon" class="bg-darkBg border border-darkBorder rounded-xl p-3.5"><option value="fa-fire">🔥 Fire</option><option value="fa-crosshairs">🎯 Cross</option><option value="fa-cube">📦 Cube</option><option value="fa-shield-halved">🛡️ Shield</option><option value="fa-gem">💎 Gem</option><option value="fa-star">⭐ Star</option><option value="fa-gamepad">🎮 Pad</option></select><select id="cf_color" class="bg-darkBg border border-darkBorder rounded-xl p-3.5"><option value="text-amber-500">Ambar</option><option value="text-cyan-400">Cyan</option><option value="text-red-400">Rojo</option><option value="text-purple-400">Morado</option><option value="text-green-400">Verde</option></select></div><div class="grid grid-cols-2 gap-3"><button onclick="document.getElementById('catModal').classList.add('hidden')" class="py-3.5 bg-darkBg border border-darkBorder rounded-xl font-bold">Cancelar</button><button onclick="saveCat()" class="py-3.5 font-extrabold rounded-xl text-white btn-theme shadow-md">Guardar</button></div></div></div>
+
+<div id="couponModal" class="hidden fixed inset-0 z-[60] bg-black/85 p-4 flex items-center justify-center backdrop-blur-sm"><div class="bg-darkCard border border-darkBorder rounded-3xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto shadow-2xl"><h3 class="font-black mb-4 uppercase text-sm tracking-wider" style="color:var(--p1)">Configuración de Cupón Pro</h3><input type="hidden" id="cp_id"><input id="cp_code" placeholder="Código EJ: NEXUS10" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 mb-3 font-bold uppercase"><div class="grid grid-cols-2 gap-3 mb-3"><select id="cp_type" class="bg-darkBg border border-darkBorder rounded-xl p-3.5"><option value="percent">% Porcentaje</option><option value="fixed">₲ Monto fijo</option></select><input id="cp_value" type="number" placeholder="Valor Ej: 10" class="bg-darkBg border border-darkBorder rounded-xl p-3.5"></div><div class="grid grid-cols-2 gap-3 mb-3"><input id="cp_max" type="number" placeholder="Max usos (0=∞)" class="bg-darkBg border border-darkBorder rounded-xl p-3.5"><input id="cp_min" type="number" placeholder="Mínimo $ (0=no)" class="bg-darkBg border border-darkBorder rounded-xl p-3.5"></div><input id="cp_exp" type="date" class="w-full bg-darkBg border border-darkBorder rounded-xl p-3.5 mb-3"><label class="flex items-center gap-2 mb-3 text-sm"><input type="checkbox" id="cp_active" checked class="w-5 h-5"> Activo</label><label class="flex items-center gap-2 mb-4 text-sm p-3.5 rounded-xl" style="background:color-mix(in srgb, var(--p1) 10%, transparent);border:1px solid color-mix(in srgb, var(--p1) 20%, transparent)"><input type="checkbox" id="cp_onePerUser" class="w-5 h-5"><span class="font-bold" style="color:var(--p1)">Solo 1 uso por usuario</span></label><div class="grid grid-cols-2 gap-3"><button onclick="closeCouponModal()" class="py-3.5 bg-darkBg border border-darkBorder rounded-xl font-bold">Cancelar</button><button onclick="saveCoupon()" id="btnCp" class="py-3.5 font-extrabold rounded-xl text-white btn-theme shadow-md">Guardar Cupón</button></div></div></div>
+
 <div id="toasts" class="fixed top-4 left-4 right-4 z-[200] space-y-2 pointer-events-none"></div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, deleteDoc, collection, onSnapshot, getDoc, getDocs, query, where, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-const firebaseConfig={apiKey:"AIzaSyATtbMHvq8jj-LqgLSLxtkGkR3PmWs84D8",authDomain:"recargas-nexus-ff.firebaseapp.com",projectId:"recargas-nexus-ff",storageBucket:"recargas-nexus-ff.firebasestorage.app",messagingSenderId:"930789173921",appId:"1:930789173921:web:a9dd8d93de42599d795ee0"};
-let db=null; const appId="nexus-gamer-store";
-let products=[], orders=[], catalogs=[], registeredUsers=[], oFilter='all', pSearch='', oSearch='', cSearch='', currentRate=7500, firstLoad=true, orderLimit=20;
-let unsubs=[];
+const firebaseConfig={apiKey:"AIzaSyATtbMHvq8jj-LqgLSLxtkGkR3PmWs84D8","authDomain":"recargas-nexus-ff.firebaseapp.com",projectId:"recargas-nexus-ff",storageBucket:"recargas-nexus-ff.firebasestorage.app",messagingSenderId:"930789173921",appId:"1:930789173921:web:a9dd8d93de42599d795ee0"};
+const ADMIN_EMAIL="nestorjavierportillo619@gmail.com";
+const appId="nexus-gamer-store";
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+enableIndexedDbPersistence(db).catch(()=>{});
+let products=[], orders=[], catalogs=[], registeredUsers=[], oFilter='all', pSearch='', oSearch='', cSearch='', currentRate=7500, firstLoad=true, orderLimit=20, unsubs=[];
 function esc(s){ if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-let adminPass = localStorage.getItem('nexus_admin_pass') || 'Romi20';
-const ADMIN_HARD = 'Romi20';
-try{const app=initializeApp(firebaseConfig);db=getFirestore(app);enableIndexedDbPersistence(db).catch(()=>{});getDoc(doc(db,'artifacts',appId,'public','data','settings','general')).then(s=>{if(s.exists()){if(s.data().adminPass){adminPass=s.data().adminPass;localStorage.setItem('nexus_admin_pass',adminPass);}if(s.data().rate)currentRate=s.data().rate;}}).catch(()=>{});}catch(e){}
-window.unlock=()=>{const v=document.getElementById('pw').value.trim();if(v===ADMIN_HARD||v==='Romi'||v===adminPass){localStorage.setItem('nexus_admin_pass',v);adminPass=v;document.getElementById('gate').style.display='none';document.getElementById('app').classList.remove('hidden');if(db)initFirebaseListeners();}else{alert('Incorrecta. Usa Romi20');}};
-window.addEventListener('load',()=>{const saved=localStorage.getItem('nexus_admin_pass');if(saved&&saved.length>=4){document.getElementById('pw').value=saved;setTimeout(()=>{const v=saved;if(v===ADMIN_HARD||v==='Romi'||v===adminPass){document.getElementById('gate').style.display='none';document.getElementById('app').classList.remove('hidden');if(db)initFirebaseListeners();}},300);}});
-window.logout=()=>{unsubs.forEach(fn=>{try{fn()}catch(e){}});unsubs=[];location.reload();};
+function applyTheme(theme){ if(!theme) return; document.body.classList.remove('tema-rojo','tema-verde','tema-rosado','tema-morado','tema-amarillo','tema-azul','tema-cyan'); document.body.classList.add(theme); const sel=document.getElementById('s_theme'); if(sel) sel.value=theme; }
+onAuthStateChanged(auth, async (u)=>{
+  const gate=document.getElementById('gate'); const appDiv=document.getElementById('app'); const msg=document.getElementById('gate-msg');
+  if(!u){ gate.style.display='flex'; appDiv.classList.add('hidden'); return; }
+  if(u.email.toLowerCase()!== ADMIN_EMAIL.toLowerCase()){ msg.textContent='⛔ Acceso denegado: '+u.email; msg.classList.remove('hidden'); await signOut(auth); return; }
+  gate.style.display='none'; appDiv.classList.remove('hidden'); initFirebaseListeners();
+});
+document.getElementById('btnGoogleLogin').onclick=async()=>{ const msg=document.getElementById('gate-msg'); try{ await signInWithPopup(auth, new GoogleAuthProvider()); }catch(e){ msg.textContent=e.message; msg.classList.remove('hidden'); } };
+window.logout=async()=>{ unsubs.forEach(fn=>{try{fn()}catch{}}); unsubs=[]; await signOut(auth); location.reload(); };
 window.exportExcel=()=>{if(!orders.length)return;const rows=[['Fecha','Cliente','Producto','PlayerID','USD','PYG','Pago','Estado']];orders.forEach(o=>{rows.push([`"${esc(o.createdAt||'')}"`,`"${esc(o.userName||'')}"`,`"${esc(o.productId||'')}"`,esc(o.playerId||''),o.priceUSD||0,o.pricePYG||0,esc(o.paymentMethod||''),esc(o.status||'')])});const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(["\ufeff"+rows.map(r=>r.join(',')).join('\n')],{type:'text/csv'}));a.download='ordenes.csv';a.click();};
-function toast(m){const d=document.createElement('div');d.className='pointer-events-auto p-4 rounded-2xl text-sm font-bold bg-neonGreen/20 border border-neonGreen/40 text-neonGreen shadow-2xl';d.textContent=m;document.getElementById('toasts').appendChild(d);setTimeout(()=>d.remove(),2500);}
+function toast(m){const d=document.createElement('div');d.className='pointer-events-auto p-4 rounded-2xl text-sm font-bold shadow-2xl text-white';d.style.background='var(--p1)';d.textContent=m;document.getElementById('toasts').appendChild(d);setTimeout(()=>d.remove(),2500);}
 window.go=(sec)=>{['dashboard','orders','products','catalogs','clients','coupons','settings'].forEach(x=>document.getElementById('sec-'+x).classList.add('hidden'));document.getElementById('sec-'+sec).classList.remove('hidden');document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.nav===sec));document.getElementById('sidebar').classList.add('-translate-x-full');document.getElementById('overlay').classList.add('hidden');window.scrollTo(0,0);};
 window.toggleMenu=()=>{const s=document.getElementById('sidebar');const o=!s.classList.contains('-translate-x-full');s.classList.toggle('-translate-x-full',o);document.getElementById('overlay').classList.toggle('hidden',o);};
-window.initFirebaseListeners=function(){if(!db)return;unsubs.forEach(fn=>{try{fn()}catch(e){}});unsubs=[];unsubs.push(onSnapshot(collection(db,'artifacts',appId,'public','data','products'),s=>{products=[];s.forEach(d=>products.push(d.data()));renderP();}));unsubs.push(onSnapshot(collection(db,'artifacts',appId,'public','data','catalogs'),s=>{catalogs=[];s.forEach(d=>catalogs.push(d.data()));renderCats();}));unsubs.push(onSnapshot(collection(db,'artifacts',appId,'public','data','orders'),s=>{orders=[];s.forEach(d=>orders.push({fid:d.id,...d.data()}));firstLoad=false;renderO();renderDash();renderClients();}));unsubs.push(onSnapshot(collection(db,'artifacts',appId,'public','data','coupons'),s=>{renderCouponsFromListener(s);}));unsubs.push(onSnapshot(collection(db,'artifacts',appId,'users'),s=>{registeredUsers=[];s.forEach(d=>{const u=d.data();registeredUsers.push({uid:d.id,name:u.displayName||u.name||u.userName||'Gamer',email:u.email||'',photo:u.photoURL||'',createdAt:u.createdAt||''})});renderClients();}));getDoc(doc(db,'artifacts',appId,'public','data','settings','general')).then(s=>{if(s.exists()){const d=s.data();document.getElementById('s_name').value=d.siteName||'';document.getElementById('s_subtitle').value=d.siteSubtitle||'';document.getElementById('s_hero').value=d.heroTitle||'';document.getElementById('s_splash_active').checked=!!d.splashActive;document.getElementById('s_splash_title').value=d.splashTitle||'';document.getElementById('s_splash_subtitle').value=d.splashSubtitle||'';document.getElementById('s_splash_text').value=d.splashText||'';document.getElementById('s_splash_timer').value=d.splashTimer||3;document.getElementById('s_wpp').value=d.wpp||'';document.getElementById('s_wpp_text').value=d.footerWppText||'';document.getElementById('s_telegram').value=d.telegram||'';document.getElementById('s_telegram_channel').value=d.telegramChannel||'';document.getElementById('s_whatsapp_channel').value=d.whatsappChannel||'';document.getElementById('s_email').value=d.footerEmail||'';document.getElementById('s_location').value=d.footerLocation||'';document.getElementById('s_service').value=d.footerService||'';document.getElementById('s_rate').value=d.rate||7500;currentRate=d.rate||7500;
-document.getElementById('s_channels_active').checked=d.channelsActive!==false;
-document.getElementById('s_rate_active').checked=d.rateActive!==false;
-document.getElementById('s_contact_active').checked=d.contactActive!==false;
-document.getElementById('s_legal_active').checked=d.legalActive!==false;
-document.getElementById('s_float_active').checked=d.floatActive!==false;
-document.getElementById('s_float_whatsapp_active').checked=d.floatWhatsappActive!==false;
-document.getElementById('s_float_telegram_active').checked=d.floatTelegramActive!==false;
-document.getElementById('s_log_active').checked=!!d.logActive;
-document.getElementById('debug-box').classList.toggle('hidden',!d.logActive);
-if(d.bannerText)document.getElementById('s_banner_text').value=d.bannerText;document.getElementById('s_banner_active').checked=!!d.bannerActive;document.getElementById('s_terms').value=d.legal_t||'';document.getElementById('s_privacy').value=d.legal_p||'';document.getElementById('s_refund').value=d.legal_r||'';}});};
-function renderDash(){const today=new Date().toDateString();const approved=orders.filter(o=>(o.status||'pendiente')==='aprobado');const pendingCount=orders.filter(o=>(o.status||'pendiente')==='pendiente').length;const rejectedCount=orders.filter(o=>(o.status||'pendiente')==='rechazado').length;const todayApproved=approved.filter(o=>o.createdAt&&new Date(o.createdAt).toDateString()===today);const sumUSD=a=>a.reduce((x,o)=>x+(parseFloat(o.priceUSD)||0),0);const sumPYG=a=>a.reduce((x,o)=>x+(parseInt(o.pricePYG)||0),0);const tPYG=sumPYG(todayApproved);const tUSD=sumUSD(todayApproved);const mPYG=sumPYG(approved);const mUSD=sumUSD(approved);document.getElementById('kToday').textContent=`₲${tPYG.toLocaleString('es-PY')}`;document.getElementById('kTodayUSD').textContent=`$${tUSD.toFixed(2)} • ${todayApproved.length} ventas hoy`;document.getElementById('kMonth').textContent=`₲${mPYG.toLocaleString('es-PY')}`;document.getElementById('kMonthUSD').textContent=`$${mUSD.toFixed(2)} • ${approved.length} ventas totales`;document.getElementById('kOrders').innerHTML=`<span class="px-2.5 py-1 rounded-full bg-neonGreen/15 text-neonGreen text-[11px] font-bold">${approved.length} Aprob</span><span class="px-2.5 py-1 rounded-full bg-neonGold/15 text-neonGold text-[11px] font-bold">${pendingCount} Pend</span><span class="px-2.5 py-1 rounded-full bg-red-500/15 text-red-400 text-[11px] font-bold">${rejectedCount} Rech</span>`;document.getElementById('kOrdersBadge').textContent=`${orders.length} ORDENES`;document.getElementById('kAvg').textContent=approved.length?`₲${Math.round(mPYG/approved.length).toLocaleString('es-PY')}`:'₲0';document.getElementById('kAvgSub').textContent=approved.length?`$${(mUSD/approved.length).toFixed(2)} promedio`:'Sin ventas aún';const b=document.getElementById('badge');b.classList.toggle('hidden',!pendingCount);b.textContent=pendingCount;const recents=orders.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).slice(0,5);document.getElementById('recentOrders').innerHTML=recents.map(o=>`<div class="flex items-center justify-between bg-darkBg border border-darkBorder rounded-xl p-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-[12px]">${o.status==='aprobado'?'✅':o.status==='rechazado'?'❌':'⏳'}</div><div><div class="font-bold text-[13px]">${esc(o.userName||'Cliente')} • <span class="text-neonCyan">${esc(o.productId||'')}</span></div><div class="text-[11px] text-gray-500">${fmtDate(o.createdAt)} • ${esc(o.playerId||'')}</div></div></div><div class="text-right"><div class="font-black text-[13px] text-neonGreen">₲${Number(o.pricePYG||0).toLocaleString('es-PY')}</div><div class="text-[10px] px-1.5 py-0.5 rounded-full inline-block ${o.status==='aprobado'?'bg-neonGreen/15 text-neonGreen':o.status==='rechazado'?'bg-red-500/15 text-red-400':'bg-neonGold/15 text-neonGold'}">${esc(o.status||'pendiente')}</div></div></div>`).join('')||'<p class="text-gray-500 text-xs text-center py-6">Sin órdenes aún</p>';renderTop();}
-function renderTop(){const m={};orders.filter(o=>(o.status||'pendiente')==='aprobado').forEach(o=>{const key=o.productId||'Desconocido';if(!m[key])m[key]={count:0,pyg:0};m[key].count++;m[key].pyg+=(parseInt(o.pricePYG)||0);});const t=Object.entries(m).sort((a,b)=>b[1].count-a[1].count).slice(0,5);document.getElementById('topProducts').innerHTML=t.map(([n,v],i)=>`<div class="flex items-center justify-between bg-darkBg border border-darkBorder rounded-xl px-3 py-3"><div class="flex items-center gap-3"><div class="w-6 h-6 rounded-full bg-neonCyan/15 text-neonCyan flex items-center justify-center text-[11px] font-black">${i+1}</div><div><div class="font-bold text-[13px] truncate max-w-[140px]">${esc(n)}</div><div class="text-[11px] text-gray-500">₲${v.pyg.toLocaleString('es-PY')} total</div></div></div><div class="text-right"><div class="font-black text-neonCyan text-[14px]">${v.count}</div><div class="text-[10px] text-gray-500">ventas</div></div></div>`).join('')||'<p class="text-gray-500 text-xs text-center py-6">Sin ventas aprobadas aún</p>';}
-window.fOrder=f=>{oFilter=f;orderLimit=20;document.querySelectorAll('.ofilter-btn').forEach(btn=>{const type=btn.dataset.ofilter;btn.className='ofilter-btn px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all';if(type===f){if(f==='all')btn.classList.add('bg-neonCyan','text-black','shadow-[0_0_15px_rgba(6,182,212,.4)]');if(f==='pendiente')btn.classList.add('bg-neonGold','text-black','shadow-[0_0_15px_rgba(245,158,11,.4)]');if(f==='aprobado')btn.classList.add('bg-neonGreen','text-black','shadow-[0_0_15px_rgba(16,185,129,.4)]');if(f==='rechazado')btn.classList.add('bg-red-500','text-white','shadow-[0_0_15px_rgba(239,68,68,.4)]');}else{btn.classList.add('bg-darkCard','border','border-darkBorder','text-gray-400');}});renderO();};
+window.initFirebaseListeners=function(){
+if(!db)return;
+unsubs.forEach(fn=>{try{fn()}catch(e){}});unsubs=[];
+unsubs.push(onSnapshot(collection(db,'artifacts',appId,'public','data','products'),s=>{products=[];s.forEach(d=>products.push(d.data()));renderP();}));
+unsubs.push(onSnapshot(collection(db,'artifacts',appId,'public','data','catalogs'),s=>{catalogs=[];s.forEach(d=>catalogs.push(d.data()));renderCats();}));
+unsubs.push(onSnapshot(collection(db,'artifacts',appId,'public','data','orders'),s=>{orders=[];s.forEach(d=>orders.push({fid:d.id,...d.data()}));firstLoad=false;renderO();renderDash();renderClients();}));
+unsubs.push(onSnapshot(collection(db,'artifacts',appId,'public','data','coupons'),s=>{renderCouponsFromListener(s);}));
+unsubs.push(onSnapshot(collection(db,'artifacts',appId,'users'),s=>{registeredUsers=[];s.forEach(d=>{const u=d.data();registeredUsers.push({uid:d.id,name:u.displayName||u.name||u.userName||'Gamer',email:u.email||'',photo:u.photoURL||'',balancePYG:u.balancePYG||0,createdAt:u.createdAt||''})});renderClients();}));
+unsubs.push(onSnapshot(doc(db,'artifacts',appId,'public','data','settings','general'),snap=>{
+  if(!snap.exists()) return; const d=snap.data(); applyTheme(d.theme||'tema-cyan');
+  document.getElementById('s_name').value=d.siteName||''; document.getElementById('s_subtitle').value=d.siteSubtitle||''; document.getElementById('s_hero').value=d.heroTitle||'';
+  document.getElementById('s_splash_active').checked=!!d.splashActive; document.getElementById('s_splash_title').value=d.splashTitle||''; document.getElementById('s_splash_subtitle').value=d.splashSubtitle||''; document.getElementById('s_splash_text').value=d.splashText||''; document.getElementById('s_splash_timer').value=d.splashTimer||3;
+  document.getElementById('s_wpp').value=d.wpp||''; document.getElementById('s_wpp_text').value=d.footerWppText||''; document.getElementById('s_telegram').value=d.telegram||''; document.getElementById('s_telegram_channel').value=d.telegramChannel||''; document.getElementById('s_whatsapp_channel').value=d.whatsappChannel||''; document.getElementById('s_email').value=d.footerEmail||''; document.getElementById('s_location').value=d.footerLocation||''; document.getElementById('s_service').value=d.footerService||''; document.getElementById('s_rate').value=d.rate||7500;currentRate=d.rate||7500;
+  
+  document.getElementById('pay_transfer_active').checked=d.pay_transfer_active!==false; 
+  document.getElementById('pay_transfer_name').value=d.pay_transfer_name||'Transferencia Bancaria'; 
+  document.getElementById('pay_transfer_image').value=d.pay_transfer_image||''; 
+  document.getElementById('pay_transfer_details').value=d.pay_transfer_details||'';
+
+  document.getElementById('pay_tigo_active').checked=d.pay_tigo_active!==false; 
+  document.getElementById('pay_tigo_name').value=d.pay_tigo_name||'Tigo Money'; 
+  document.getElementById('pay_tigo_image').value=d.pay_tigo_image||''; 
+  document.getElementById('pay_tigo_details').value=d.pay_tigo_details||'';
+
+  document.getElementById('pay_binance_active').checked=!!d.pay_binance_active; 
+  document.getElementById('pay_binance_name').value=d.pay_binance_name||'Binance Pay'; 
+  document.getElementById('pay_binance_image').value=d.pay_binance_image||''; 
+  document.getElementById('pay_binance_details').value=d.pay_binance_details||'';
+
+  document.getElementById('s_channels_active').checked=d.channelsActive!==false; document.getElementById('s_rate_active').checked=d.rateActive!==false; document.getElementById('s_contact_active').checked=d.contactActive!==false; document.getElementById('s_legal_active').checked=d.legalActive!==false; document.getElementById('s_float_active').checked=d.floatActive!==false; document.getElementById('s_float_whatsapp_active').checked=d.floatWhatsappActive!==false; document.getElementById('s_float_telegram_active').checked=d.floatTelegramActive!==false; document.getElementById('s_log_active').checked=!!d.logActive; document.getElementById('debug-box').classList.toggle('hidden',!d.logActive);
+  if(d.bannerText)document.getElementById('s_banner_text').value=d.bannerText; document.getElementById('s_banner_active').checked=!!d.bannerActive;
+  document.getElementById('s_terms').value=d.legal_t||''; document.getElementById('s_privacy').value=d.legal_p||''; document.getElementById('s_refund').value=d.legal_r||'';
+}));
+};
+function renderDash(){const today=new Date().toDateString();const approved=orders.filter(o=>(o.status||'pendiente')==='aprobado');const pendingCount=orders.filter(o=>(o.status||'pendiente')==='pendiente').length;const rejectedCount=orders.filter(o=>(o.status||'pendiente')==='rechazado').length;const todayApproved=approved.filter(o=>o.createdAt&&new Date(o.createdAt).toDateString()===today);const sumUSD=a=>a.reduce((x,o)=>x+(parseFloat(o.priceUSD)||0),0);const sumPYG=a=>a.reduce((x,o)=>x+(parseInt(o.pricePYG)||0),0);const tPYG=sumPYG(todayApproved);const tUSD=sumUSD(todayApproved);const mPYG=sumPYG(approved);const mUSD=sumUSD(approved);document.getElementById('kToday').textContent=`₲${tPYG.toLocaleString('es-PY')}`;document.getElementById('kTodayUSD').textContent=`$${tUSD.toFixed(2)} • ${todayApproved.length} ventas hoy`;document.getElementById('kMonth').textContent=`₲${mPYG.toLocaleString('es-PY')}`;document.getElementById('kMonthUSD').textContent=`$${mUSD.toFixed(2)} • ${approved.length} ventas totales`;document.getElementById('kOrders').innerHTML=`<span class="px-2.5 py-1 rounded-full text-white text-[11px] font-bold" style="background:var(--p1)">${approved.length} Aprob</span><span class="px-2.5 py-1 rounded-full bg-yellow-500/15 text-yellow-400 text-[11px] font-bold">${pendingCount} Pend</span><span class="px-2.5 py-1 rounded-full bg-red-500/15 text-red-400 text-[11px] font-bold">${rejectedCount} Rech</span>`;document.getElementById('kOrdersBadge').textContent=`${orders.length} ORDENES`;document.getElementById('kAvg').textContent=approved.length?`₲${Math.round(mPYG/approved.length).toLocaleString('es-PY')}`:'₲0';document.getElementById('kAvgSub').textContent=approved.length?`$${(mUSD/approved.length).toFixed(2)} promedio`:'Sin ventas aún';const b=document.getElementById('badge');b.classList.toggle('hidden',!pendingCount);b.textContent=pendingCount;const recents=orders.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).slice(0,5);document.getElementById('recentOrders').innerHTML=recents.map(o=>`<div class="flex items-center justify-between bg-darkBg border border-darkBorder rounded-xl p-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-[12px]">${o.status==='aprobado'?'✅':o.status==='rechazado'?'❌':'⏳'}</div><div><div class="font-bold text-[13px]">${esc(o.userName||'Cliente')} • <span style="color:var(--p1)">${esc(o.productId||'')}</span></div><div class="text-[11px] text-gray-500">${fmtDate(o.createdAt)} • ${esc(o.playerId||'')}</div></div></div><div class="text-right"><div class="font-black text-[13px] text-green-400">₲${Number(o.pricePYG||0).toLocaleString('es-PY')}</div><div class="text-[10px] px-1.5 py-0.5 rounded-full inline-block ${o.status==='aprobado'?'bg-green-500/15 text-green-400':o.status==='rechazado'?'bg-red-500/15 text-red-400':'bg-yellow-500/15 text-yellow-400'}">${esc(o.status||'pendiente')}</div></div></div>`).join('')||'<p class="text-gray-500 text-xs text-center py-6">Sin órdenes aún</p>';renderTop();}
+function renderTop(){const m={};orders.filter(o=>(o.status||'pendiente')==='aprobado').forEach(o=>{const key=o.productId||'Desconocido';if(!m[key])m[key]={count:0,pyg:0};m[key].count++;m[key].pyg+=(parseInt(o.pricePYG)||0);});const t=Object.entries(m).sort((a,b)=>b[1].count-a[1].count).slice(0,5);document.getElementById('topProducts').innerHTML=t.map(([n,v],i)=>`<div class="flex items-center justify-between bg-darkBg border border-darkBorder rounded-xl px-3 py-3"><div class="flex items-center gap-3"><div class="w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-black text-white" style="background:var(--p1)">${i+1}</div><div><div class="font-bold text-[13px] truncate max-w-[140px]">${esc(n)}</div><div class="text-[11px] text-gray-500">₲${v.pyg.toLocaleString('es-PY')} total</div></div></div><div class="text-right"><div class="font-black text-[14px]" style="color:var(--p1)">${v.count}</div><div class="text-[10px] text-gray-500">ventas</div></div></div>`).join('')||'<p class="text-gray-500 text-xs text-center py-6">Sin ventas aprobadas aún</p>';}
+window.fOrder=f=>{oFilter=f;orderLimit=20;document.querySelectorAll('.ofilter-btn').forEach(btn=>{const type=btn.dataset.ofilter;btn.className='ofilter-btn px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all';if(type===f){btn.classList.add('text-white');btn.style.background='var(--p1)';}else{btn.classList.add('bg-darkCard','border','border-darkBorder','text-gray-400');btn.style.background='';}});renderO();};
 window.searchO=v=>{oSearch=v.toLowerCase();orderLimit=20;renderO();};window.showMore=()=>{orderLimit+=20;renderO();};
 function fmtDate(iso){if(!iso)return'';const d=new Date(iso);return d.toLocaleDateString('es-PY',{day:'2-digit',month:'short'})+' '+d.toLocaleTimeString('es-PY',{hour:'2-digit',minute:'2-digit'});}
-function renderO(){const l=orders.filter(o=>(oFilter==='all'||(o.status||'pendiente')===oFilter)&&((o.userName||'').toLowerCase().includes(oSearch)||(o.playerId||'').toLowerCase().includes(oSearch)||(o.txId||'').toLowerCase().includes(oSearch))).sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));const slice=l.slice(0,orderLimit);document.getElementById('moreOrders').classList.toggle('hidden',l.length<=orderLimit);document.getElementById('oList').innerHTML=slice.map(o=>`<div class="bg-darkCard border border-darkBorder rounded-2xl p-4"><div class="flex justify-between mb-1"><div class="font-bold text-sm">${esc(o.userName||'Cliente')}</div><span class="text-[10px] px-2 py-1 rounded-full font-black uppercase ${o.status==='aprobado'?'bg-neonGreen/20 text-neonGreen':o.status==='rechazado'?'bg-red-500/20 text-red-400':'bg-neonGold/20 text-neonGold'}">${esc(o.status||'pendiente')}</span></div><div class="text-[11px] text-gray-500 mb-2">${fmtDate(o.createdAt)} • ${esc(o.txId||'')} ${o.couponCode?`• 🎟️ ${esc(o.couponCode)}`:''}</div><div class="text-xs text-gray-300 bg-darkBg rounded-xl p-3 space-y-1"><div>🎮 ${esc(o.productId||'')}</div><div>👤 ID: <span class="text-neonCyan font-bold">${esc(o.playerId||'')}</span></div><div>💰 $${esc(o.priceUSD||0)} • ₲${Number(o.pricePYG||0).toLocaleString('es-PY')} ${o.originalPricePYG?`(antes ₲${Number(o.originalPricePYG).toLocaleString()})`:''} • 💳 ${esc(o.paymentMethod||'-')}</div></div><div class="grid grid-cols-3 gap-2 mt-3"><button onclick="setSt('${o.fid}','pendiente')" class="py-2 rounded-xl text-[11px] font-bold ${o.status==='pendiente'?'bg-neonGold text-black':'bg-neonGold/10 text-neonGold'}">Pend.</button><button onclick="setSt('${o.fid}','aprobado')" class="py-2 rounded-xl text-[11px] font-bold ${o.status==='aprobado'?'bg-neonGreen text-black':'bg-neonGreen/10 text-neonGreen'}">Aprobado</button><button onclick="setSt('${o.fid}','rechazado')" class="py-2 rounded-xl text-[11px] font-bold ${o.status==='rechazado'?'bg-red-500 text-white':'bg-red-500/10 text-red-400'}">Rechazado</button></div><button onclick="delOrder('${o.fid}')" class="w-full mt-2 py-2 rounded-xl text-[11px] font-bold bg-black/40 text-gray-500">Eliminar</button></div>`).join('')||'<p class="text-center text-gray-500 py-10">Sin órdenes</p>';}
-window.setSt=async(id,s)=>{const order=orders.find(o=>o.fid===id);if(!order)return;await setDoc(doc(db,'artifacts',appId,'public','data','orders',id),{status:s},{merge:true});if(order.userId&&order.txId){try{const q=query(collection(db,'artifacts',appId,'users',order.userId,'transactions'),where('txId','==',order.txId));const snap=await getDocs(q);snap.forEach(async d=>{await setDoc(d.ref,{status:s},{merge:true});});}catch(e){}}toast('→ '+s.toUpperCase());};
+function renderO(){const l=orders.filter(o=>(oFilter==='all'||(o.status||'pendiente')===oFilter)&&((o.userName||'').toLowerCase().includes(oSearch)||(o.playerId||'').toLowerCase().includes(oSearch)||(o.txId||'').toLowerCase().includes(oSearch))).sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));const slice=l.slice(0,orderLimit);document.getElementById('moreOrders').classList.toggle('hidden',l.length<=orderLimit);document.getElementById('oList').innerHTML=slice.map(o=>`<div class="bg-darkCard border border-darkBorder rounded-2xl p-4"><div class="flex justify-between mb-1"><div class="font-bold text-sm">${esc(o.userName||'Cliente')}</div><span class="text-[10px] px-2 py-1 rounded-full font-black uppercase ${o.status==='aprobado'?'bg-green-500/20 text-green-400':o.status==='rechazado'?'bg-red-500/20 text-red-400':'bg-yellow-500/20 text-yellow-400'}">${esc(o.status||'pendiente')}</span></div><div class="text-[11px] text-gray-500 mb-2">${fmtDate(o.createdAt)} • ${esc(o.txId||'')} ${o.couponCode?`• 🎟️ ${esc(o.couponCode)}`:''}</div><div class="text-xs text-gray-300 bg-darkBg rounded-xl p-3 space-y-1"><div>🎮 ${esc(o.productId||'')}</div><div>👤 ID: <span class="font-bold" style="color:var(--p1)">${esc(o.playerId||'')}</span></div><div>💰 $${esc(o.priceUSD||0)} • ₲${Number(o.pricePYG||0).toLocaleString('es-PY')} • 💳 ${esc(o.paymentMethod||'-')}</div></div><div class="grid grid-cols-3 gap-2 mt-3"><button onclick="setSt('${o.fid}','pendiente')" class="py-2 rounded-xl text-[11px] font-bold ${o.status==='pendiente'?'text-black':''}" style="${o.status==='pendiente'?'background:var(--p1)':`background:color-mix(in srgb, var(--p1) 15%, transparent);color:var(--p1)`}">Pend.</button><button onclick="setSt('${o.fid}','aprobado')" class="py-2 rounded-xl text-[11px] font-bold ${o.status==='aprobado'?'bg-green-500 text-black':'bg-green-500/10 text-green-400'}">Aprobado</button><button onclick="setSt('${o.fid}','rechazado')" class="py-2 rounded-xl text-[11px] font-bold ${o.status==='rechazado'?'bg-red-500 text-white':'bg-red-500/10 text-red-400'}">Rechazado</button></div><button onclick="delOrder('${o.fid}')" class="w-full mt-2 py-2 rounded-xl text-[11px] font-bold bg-black/40 text-gray-500">Eliminar</button></div>`).join('')||'<p class="text-center text-gray-500 py-10">Sin órdenes</p>';}
+window.setSt=async(id,s)=>{const order=orders.find(o=>o.fid===id);if(!order)return;await setDoc(doc(db,'artifacts',appId,'public','data','orders',id),{status:s},{merge:true});toast('→ '+s.toUpperCase());};
 window.delOrder=async(id)=>{if(confirm('¿Eliminar orden?'))await deleteDoc(doc(db,'artifacts',appId,'public','data','orders',id));};
-window.deleteAllRejected=async()=>{const rej=orders.filter(o=>(o.status||'')==='rechazado');if(!rej.length){toast('No hay rechazados');return;}if(!confirm(`¿Eliminar ${rej.length} órdenes RECHAZADAS para siempre?`))return;for(const o of rej){try{await deleteDoc(doc(db,'artifacts',appId,'public','data','orders',o.fid));}catch(e){}}toast(`🗑️ ${rej.length} rechazados eliminados`);};
+window.deleteAllRejected=async()=>{const rej=orders.filter(o=>(o.status||'')==='rechazado');if(!rej.length){toast('No hay rechazados');return;}if(!confirm(`¿Eliminar ${rej.length} órdenes RECHAZADAS?`))return;for(const o of rej){try{await deleteDoc(doc(db,'artifacts',appId,'public','data','orders',o.fid));}catch(e){}}toast(`🗑️ ${rej.length} eliminados`);};
 window.searchP=v=>{pSearch=v.toLowerCase();renderP();};
-function renderP(){document.getElementById('pList').innerHTML=products.filter(p=>(p.name||'').toLowerCase().includes(pSearch)).map(p=>`<div class="bg-darkCard border border-darkBorder rounded-2xl p-4"><div class="flex gap-3"><img src="${esc(p.img||'')}" onerror="this.style.display='none'" class="w-14 h-14 rounded-xl object-cover bg-darkBg border border-darkBorder"><div class="flex-1"><div class="font-bold text-sm flex items-center gap-2">${esc(p.name)} ${p.isOffer?'<span class="text-[9px] bg-neonCyan text-black px-1.5 py-0.5 rounded font-black">OFERTA</span>':''}</div><div class="text-xs text-gray-400">$${esc(p.priceUSD)} • ₲${Number(p.pricePYG||0).toLocaleString('es-PY')} • <span class="text-[10px] ${p.active===false?'text-red-400':'text-neonGreen'}">${p.active===false?'PAUSADO':'ACTIVO'}</span><br><span class="text-[10px] text-gray-500 truncate">${esc(p.game||'')}</span></div></div></div><div class="grid grid-cols-3 gap-2 mt-3"><button onclick="editP('${p.id}')" class="py-2 bg-darkBg border border-darkBorder rounded-xl text-xs">Editar</button><button onclick="togP('${p.id}')" class="py-2 bg-darkBg border border-darkBorder rounded-xl text-xs">${p.active===false?'Activar':'Pausar'}</button><button onclick="delP('${p.id}')" class="py-2 bg-red-500/10 text-red-400 rounded-xl"><i class="fa-solid fa-trash text-xs"></i></button></div></div>`).join('')||'<p class="text-center text-gray-500 py-10">Sin productos</p>';}
-function resetProdForm(){document.getElementById('pf_id').value='';document.getElementById('pf_name').value='';document.getElementById('pf_usd').value='';document.getElementById('pf_pyg').value='';document.getElementById('pf_img').value='';document.getElementById('pf_preview').classList.add('hidden');document.getElementById('pf_isOffer').checked=false;document.getElementById('newCatBox').classList.add('hidden');}
+function renderP(){document.getElementById('pList').innerHTML=products.filter(p=>(p.name||'').toLowerCase().includes(pSearch)).map(p=>{ let perc=0; if(p.oldPriceUSD&&p.oldPriceUSD>p.priceUSD) perc=Math.round(((p.oldPriceUSD-p.priceUSD)/p.oldPriceUSD)*100); return `<div class="bg-darkCard border border-darkBorder rounded-2xl p-4"><div class="flex gap-3"><img src="${esc(p.img||'')}" onerror="this.style.display='none'" class="w-14 h-14 rounded-xl object-cover bg-darkBg border border-darkBorder"><div class="flex-1"><div class="font-bold text-sm flex items-center gap-2">${esc(p.name)} ${p.isOffer?`<span class="text-[9px] text-white px-1.5 py-0.5 rounded font-black" style="background:var(--p1)">OFERTA</span>`:''} ${perc>0?`<span class="text-[9px] bg-red-500 text-white px-1.5 py-0.5 rounded font-black">-${perc}%</span>`:''}</div><div class="text-xs text-gray-400">$${esc(p.priceUSD)} • ₲${Number(p.pricePYG||0).toLocaleString('es-PY')} ${p.oldPriceUSD?`<span class="line-through text-gray-500">$${p.oldPriceUSD}</span>`:''} • <span class="text-[10px] ${p.active===false?'text-red-400':'text-green-400'}">${p.active===false?'PAUSADO':'ACTIVO'}</span><br><span class="text-[10px] text-cyan-400 font-bold">🪙 ${esc(p.currency||'Diamantes')}</span> • <span class="text-[10px] text-gray-500 truncate">${esc(p.game||'')}</span></div></div></div><div class="grid grid-cols-3 gap-2 mt-3"><button onclick="editP('${p.id}')" class="py-2 bg-darkBg border border-darkBorder rounded-xl text-xs text-white">Editar</button><button onclick="togP('${p.id}')" class="py-2 bg-darkBg border border-darkBorder rounded-xl text-xs text-white">${p.active===false?'Activar':'Pausar'}</button><button onclick="delP('${p.id}')" class="py-2 bg-red-500/10 text-red-400 rounded-xl"><i class="fa-solid fa-trash text-xs"></i></button></div></div>`}).join('')||'<p class="text-center text-gray-500 py-10">Sin productos</p>';}
+function resetProdForm(){document.getElementById('pf_id').value='';document.getElementById('pf_name').value='';document.getElementById('pf_usd').value='';document.getElementById('pf_pyg').value='';document.getElementById('pf_old_usd').value='';document.getElementById('pf_img').value='';document.getElementById('pf_preview').classList.add('hidden');document.getElementById('pf_isOffer').checked=false;document.getElementById('newCatBox').classList.add('hidden');document.getElementById('pf_currency').value='Diamantes';const off=document.getElementById('off-preview');if(off)off.textContent='0% OFF';}
 window.openProd=()=>{resetProdForm();document.getElementById('pModal').classList.remove('hidden');};
 window.closeProd=()=>{document.getElementById('pModal').classList.add('hidden');resetProdForm();};
-window.editP=id=>{const p=products.find(x=>x.id===id);if(!p)return;document.getElementById('pf_id').value=p.id;document.getElementById('pf_name').value=p.name;document.getElementById('pf_game').value=p.game;document.getElementById('pf_usd').value=p.priceUSD;document.getElementById('pf_pyg').value=p.pricePYG;document.getElementById('pf_img').value=p.img||'';document.getElementById('pf_isOffer').checked=!!p.isOffer;if(p.img){const prev=document.getElementById('pf_preview');prev.src=p.img;prev.classList.remove('hidden');}document.getElementById('pModal').classList.remove('hidden');};
+window.editP=id=>{const p=products.find(x=>x.id===id);if(!p)return;document.getElementById('pf_id').value=p.id;document.getElementById('pf_name').value=p.name;document.getElementById('pf_game').value=p.game;document.getElementById('pf_currency').value=p.currency||'Diamantes';document.getElementById('pf_usd').value=p.priceUSD;document.getElementById('pf_pyg').value=p.pricePYG;document.getElementById('pf_old_usd').value=p.oldPriceUSD||p.comparePriceUSD||'';document.getElementById('pf_img').value=p.img||'';document.getElementById('pf_isOffer').checked=!!p.isOffer;if(p.img){const prev=document.getElementById('pf_preview');prev.src=p.img;prev.classList.remove('hidden');} updateOffPreview(); document.getElementById('pModal').classList.remove('hidden');};
 document.getElementById('pf_img')?.addEventListener('input',e=>{const v=e.target.value.trim();if(v){const prev=document.getElementById('pf_preview');prev.src=v;prev.classList.remove('hidden');}});
 window.calcPrices=(from)=>{const rate=parseInt(document.getElementById('s_rate').value)||currentRate||7500;const usdEl=document.getElementById('pf_usd');const pygEl=document.getElementById('pf_pyg');if(from==='usd'&&usdEl.value){pygEl.value=Math.round(parseFloat(usdEl.value)*rate);}if(from==='pyg'&&pygEl.value){usdEl.value=(parseInt(pygEl.value)/rate).toFixed(2);}};
-window.createCatInline=async()=>{const name=document.getElementById('newCatName').value.trim();if(!name){alert('Nombre categoría');return;}const slug=name.toLowerCase().replace(/\s+/g,'').replace(/[^a-z0-9]/g,'');const id='cat_'+Date.now();await setDoc(doc(db,'artifacts',appId,'public','data','catalogs',id),{id,name,slug,icon:'fa-gamepad',color:'text-cyan-400',active:true});document.getElementById('newCatBox').classList.add('hidden');document.getElementById('newCatName').value='';document.getElementById('pf_game').value=slug;toast('Categoría '+name+' creada');};
-window.saveProd=async()=>{const name=document.getElementById('pf_name').value.trim();const usdRaw=document.getElementById('pf_usd').value;const pygRaw=document.getElementById('pf_pyg').value;const game=document.getElementById('pf_game').value;if(!name){alert('Ponle nombre');return;}if(!game){alert('Elige categoría o crea una');return;}if(!usdRaw&&!pygRaw){alert('Pon al menos PYG');return;}let usd=parseFloat(usdRaw)||0;let pyg=parseInt(pygRaw)||0;const rate=parseInt(document.getElementById('s_rate').value)||currentRate||7500;if(!usd&&pyg)usd=parseFloat((pyg/rate).toFixed(2));if(!pyg&&usd)pyg=Math.round(usd*rate);const id=document.getElementById('pf_id').value||'p_'+Date.now();let img=document.getElementById('pf_img').value.trim();const isOffer=document.getElementById('pf_isOffer').checked;const btn=document.getElementById('btnProd');btn.textContent='Guardando...';btn.disabled=true;try{await setDoc(doc(db,'artifacts',appId,'public','data','products',id),{id,name,game,priceUSD:usd,pricePYG:pyg,img,isOffer,active:true},{merge:true});closeProd();toast('Producto ₲'+pyg.toLocaleString()+' guardado');}catch(err){alert('Error: '+err.message)}finally{btn.textContent='Guardar';btn.disabled=false;}};
+window.updateOffPreview=()=>{const usd=parseFloat(document.getElementById('pf_usd').value)||0;const old=parseFloat(document.getElementById('pf_old_usd').value)||0;const el=document.getElementById('off-preview');if(!el) return; if(old>usd&&usd>0){el.textContent='-'+Math.round(((old-usd)/old)*100)+'% OFF'; el.style.color='#ef4444';}else{el.textContent='0% OFF'; el.style.color='var(--p1)';}};
+
+window.autoSelectCurrency=()=>{
+  const gameSlug=document.getElementById('pf_game').value;
+  const cat=catalogs.find(c=>c.slug===gameSlug);
+  if(cat && cat.defaultCurrency){
+    document.getElementById('pf_currency').value=cat.defaultCurrency;
+  }
+};
+
+window.applyGameRecommendation=(gameName, currencyName, imgUrl)=>{
+  document.getElementById('pf_currency').value=currencyName;
+  document.getElementById('pf_img').value=imgUrl;
+  const prev=document.getElementById('pf_preview');
+  prev.src=imgUrl;
+  prev.classList.remove('hidden');
+  const slug = gameName.toLowerCase().replace(/\s+/g,'').replace(/[^a-z0-9]/g,'');
+  const sel = document.getElementById('pf_game');
+  for(let i=0; i<sel.options.length; i++){
+    if(sel.options[i].value === slug){
+      sel.selectedIndex = i;
+      break;
+    }
+  }
+  toast(`💡 Juego seleccionado: ${gameName}`);
+};
+
+window.createCatInline=async()=>{
+  const name=document.getElementById('newCatName').value.trim();
+  const defCurr=document.getElementById('newCatCurrency').value.trim()||'Diamantes';
+  if(!name){alert('Nombre categoría');return;}
+  const slug=name.toLowerCase().replace(/\s+/g,'').replace(/[^a-z0-9]/g,'');
+  const id='cat_'+Date.now();
+  await setDoc(doc(db,'artifacts',appId,'public','data','catalogs',id),{id,name,slug,defaultCurrency:defCurr,icon:'fa-gamepad',color:'text-cyan-400',active:true});
+  document.getElementById('newCatBox').classList.add('hidden');document.getElementById('newCatName').value='';document.getElementById('newCatCurrency').value='';document.getElementById('pf_game').value=slug;toast('Categoría '+name+' creada');
+};
+
+window.saveProd=async()=>{
+  const name=document.getElementById('pf_name').value.trim();
+  const usdRaw=document.getElementById('pf_usd').value;
+  const pygRaw=document.getElementById('pf_pyg').value;
+  const oldRaw=document.getElementById('pf_old_usd').value;
+  const game=document.getElementById('pf_game').value;
+  const currency=document.getElementById('pf_currency').value||'Diamantes';
+  if(!name){alert('Ponle nombre');return;}
+  if(!game){alert('Elige categoría');return;}
+  if(!usdRaw&&!pygRaw){alert('Pon al menos PYG');return;}
+  let usd=parseFloat(usdRaw)||0;let pyg=parseInt(pygRaw)||0;let oldUSD=parseFloat(oldRaw)||0;
+  const rate=parseInt(document.getElementById('s_rate').value)||currentRate||7500;
+  if(!usd&&pyg)usd=parseFloat((pyg/rate).toFixed(2));
+  if(!pyg&&usd)pyg=Math.round(usd*rate);
+  const id=document.getElementById('pf_id').value||'p_'+Date.now();
+  let img=document.getElementById('pf_img').value.trim();
+  const isOffer=document.getElementById('pf_isOffer').checked;
+  const btn=document.getElementById('btnProd');btn.textContent='Guardando...';btn.disabled=true;
+  try{
+    await setDoc(doc(db,'artifacts',appId,'public','data','products',id),{id,name,game,currency,priceUSD:usd,pricePYG:pyg,oldPriceUSD:oldUSD||0,comparePriceUSD:oldUSD||0,img,isOffer,active:true},{merge:true});
+    closeProd();toast('Producto guardado'+(oldUSD?' -'+Math.round(((oldUSD-usd)/oldUSD)*100)+'% OFF':''));
+  }catch(err){alert('Error: '+err.message)}finally{btn.textContent='Guardar Producto';btn.disabled=false;}
+};
+
 window.togP=async id=>{const p=products.find(x=>x.id===id);await setDoc(doc(db,'artifacts',appId,'public','data','products',id),{active:!(p.active!==false)},{merge:true});};
 window.delP=async id=>{if(confirm('Eliminar producto?'))await deleteDoc(doc(db,'artifacts',appId,'public','data','products',id));};
-function renderCats(){document.getElementById('catList').innerHTML=catalogs.map(c=>`<div class="bg-darkCard border border-darkBorder rounded-2xl p-4 text-center"><i class="fa-solid ${esc(c.icon)} ${esc(c.color)} text-2xl"></i><div class="font-bold text-sm mt-2">${esc(c.name)}</div><div class="text-[10px] text-gray-500 mb-2">${esc(c.slug)}</div><button onclick="delCat('${c.id}')" class="text-red-400 text-xs"><i class="fa-solid fa-trash"></i> Eliminar</button></div>`).join('')||'<p class="text-gray-500 col-span-2 text-center py-10">Sin catálogos</p>';const sel=document.getElementById('pf_game');const cur=sel.value;sel.innerHTML=catalogs.map(c=>`<option value="${c.slug}">${esc(c.name)}</option>`).join('')||`<option value="" disabled selected>Crea una categoría con + Nueva</option>`;if(cur)sel.value=cur;}
-window.openCat=()=>{document.getElementById('cf_id').value='';document.getElementById('cf_name').value='';document.getElementById('cf_slug').value='';document.getElementById('catModal').classList.remove('hidden');};
-window.saveCat=async()=>{const name=document.getElementById('cf_name').value.trim();let slug=document.getElementById('cf_slug').value.trim().toLowerCase().replace(/\s+/g,'');if(!name||!slug){alert('Nombre y slug obligatorios');return;}const id=document.getElementById('cf_id').value||'cat_'+Date.now();await setDoc(doc(db,'artifacts',appId,'public','data','catalogs',id),{id,name,slug,icon:document.getElementById('cf_icon').value,color:document.getElementById('cf_color').value,active:true});document.getElementById('catModal').classList.add('hidden');toast('Catálogo guardado');};
+
+function renderCats(){
+  document.getElementById('catList').innerHTML=catalogs.map(c=>`<div class="bg-darkCard border border-darkBorder rounded-2xl p-4 text-center shadow-sm"><i class="fa-solid ${esc(c.icon)} ${esc(c.color)} text-2xl"></i><div class="font-bold text-sm mt-2">${esc(c.name)}</div><div class="text-[10px] text-gray-500 mb-1">Slug: ${esc(c.slug)}</div><div class="text-[10px] text-cyan-400 font-bold mb-2">🪙 ${esc(c.defaultCurrency||'Diamantes')}</div><button onclick="delCat('${c.id}')" class="text-red-400 text-xs font-bold transition hover:opacity-8"><i class="fa-solid fa-trash"></i> Eliminar</button></div>`).join('')||'<p class="text-gray-500 col-span-2 text-center py-10">Sin catálogos</p>';
+  const sel=document.getElementById('pf_game');const cur=sel.value;
+  sel.innerHTML=catalogs.map(c=>`<option value="${c.slug}">${esc(c.name)}</option>`).join('')||`<option value="" disabled selected>Crea una categoría</option>`;
+  if(cur)sel.value=cur;
+}
+
+window.openCat=()=>{document.getElementById('cf_id').value='';document.getElementById('cf_name').value='';document.getElementById('cf_slug').value='';document.getElementById('cf_currency').value='';document.getElementById('catModal').classList.remove('hidden');};
+
+window.saveCat=async()=>{
+  const name=document.getElementById('cf_name').value.trim();
+  let slug=document.getElementById('cf_slug').value.trim().toLowerCase().replace(/\s+/g,'');
+  const defCurr=document.getElementById('cf_currency').value.trim()||'Diamantes';
+  if(!name||!slug){alert('Nombre y slug');return;}
+  const id=document.getElementById('cf_id').value||'cat_'+Date.now();
+  await setDoc(doc(db,'artifacts',appId,'public','data','catalogs',id),{id,name,slug,defaultCurrency:defCurr,icon:document.getElementById('cf_icon').value,color:document.getElementById('cf_color').value,active:true});
+  document.getElementById('catModal').classList.add('hidden');toast('Catálogo guardado');
+};
+
 window.delCat=async(id)=>{if(confirm('¿Eliminar catálogo?'))await deleteDoc(doc(db,'artifacts',appId,'public','data','catalogs',id));};
 window.searchC=v=>{cSearch=v.toLowerCase();renderClients();};
+
 function renderClients(){
   const map={};
-  registeredUsers.forEach(u=>{
-    map[u.uid]={name:u.name,email:u.email,photo:u.photo,uid:u.uid,orders:0,total:0,last:'',isRegistered:true};
-  });
-  orders.forEach(o=>{
-    const k=o.userId||o.userEmail||'anon';
-    if(!map[k]) map[k]={name:o.userName||'Cliente',email:o.userEmail||'',uid:k,orders:0,total:0,last:'',isRegistered:false};
-    map[k].orders++;
-    map[k].total+=parseFloat(o.priceUSD)||0;
-    if(!map[k].last || new Date(o.createdAt) > new Date(map[k].last)) map[k].last=o.createdAt;
-    if(o.userName) map[k].name=o.userName;
-    if(o.userEmail) map[k].email=o.userEmail;
-  });
-  const dbgReg = document.getElementById('dbg-reg');
-  const dbgOrders = document.getElementById('dbg-orders');
-  const dbgFinal = document.getElementById('dbg-final');
-  const dbgLast = document.getElementById('dbg-last');
-  const logActive = document.getElementById('s_log_active')?.checked;
-  if(logActive){
-    if(dbgReg) dbgReg.textContent = registeredUsers.length;
-    if(dbgOrders) dbgOrders.textContent = orders.length;
-    if(dbgFinal) dbgFinal.textContent = Object.keys(map).length;
-    if(dbgLast) dbgLast.textContent = new Date().toLocaleTimeString() + ' • ' + (registeredUsers[0]?.email || orders[0]?.userEmail || 'sin datos');
-  }
+  registeredUsers.forEach(u=>{ map[u.uid]={name:u.name,email:u.email,photo:'',uid:u.uid,balancePYG:u.balancePYG||0,orders:0,total:0,last:'',isRegistered:true}; });
+  orders.forEach(o=>{ const k=o.userId||o.userEmail||'anon'; if(!map[k]) map[k]={name:o.userName||'Cliente',email:o.userEmail||'',uid:k,balancePYG:0,orders:0,total:0,last:'',isRegistered:false}; map[k].orders++; map[k].total+=parseFloat(o.priceUSD)||0; if(!map[k].last || new Date(o.createdAt) > new Date(map[k].last)) map[k].last=o.createdAt; if(o.userName) map[k].name=o.userName; });
   let list=Object.values(map).filter(c=>c.name.toLowerCase().includes(cSearch)||c.email.toLowerCase().includes(cSearch));
-  list.sort((a,b)=>{ if(b.orders!==a.orders) return b.orders-a.orders; return b.total-a.total; });
-  document.getElementById('cList').innerHTML=list.map(c=>`<div class="bg-darkCard border border-darkBorder rounded-2xl p-4 flex justify-between items-center gap-2">
-    <div class="flex items-center gap-3 min-w-0">
-      ${c.photo?`<img src="${esc(c.photo)}" class="w-10 h-10 rounded-full object-cover bg-black">`:`<div class="w-10 h-10 rounded-full bg-neonCyan/15 flex items-center justify-center text-neonCyan"><i class="fa-solid fa-user text-xs"></i></div>`}
-      <div class="min-w-0"><div class="font-bold text-sm truncate">${esc(c.name)} ${c.orders>0?'<span class="text-[9px] bg-neonGreen/20 text-neonGreen px-2 py-0.5 rounded-full">CON COMPRAS</span>':'<span class="text-[9px] bg-white/10 text-gray-400 px-2 py-0.5 rounded-full">REGISTRADO</span>'}</div><div class="text-[11px] text-gray-400 truncate">${esc(c.email)}</div><div class="text-[10px] text-gray-500 truncate">${c.orders} compras • ${fmtDate(c.last)||'sin compras'}</div></div>
-    </div>
-    <div class="text-right shrink-0"><div class="font-black text-neonGreen text-sm">$${c.total.toFixed(2)}</div></div>
-  </div>`).join('')||'<p class="text-center text-gray-500 py-10">Sin clientes aún</p>';
+  list.sort((a,b)=>b.balancePYG-a.balancePYG);
+  document.getElementById('cList').innerHTML=list.map(c=>`<div class="bg-darkCard border border-darkBorder rounded-2xl p-4"><div class="flex justify-between items-start"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center" style="background:color-mix(in srgb, var(--p1) 15%, transparent);color:var(--p1)"><i class="fa-solid fa-user text-xs"></i></div><div><div class="font-bold text-sm truncate">${esc(c.name)}</div><div class="text-[11px] text-gray-400 truncate">${esc(c.email)}</div><div class="text-[10px] text-gray-500">${c.orders} compras • ${fmtDate(c.last)||'sin compras'}</div></div></div><div class="text-right"><div class="font-black text-[13px]" style="color:var(--p1)">₲${Number(c.balancePYG||0).toLocaleString('es-PY')}</div><div class="text-[10px] text-gray-500">Saldo</div></div></div></div>`).join('')||'<p class="text-center text-gray-500 py-10">Sin clientes aún</p>';
 }
+
 window.openCouponModal=()=>{document.getElementById('cp_id').value='';document.getElementById('cp_code').value='';document.getElementById('cp_value').value='';document.getElementById('cp_max').value='';document.getElementById('cp_min').value='';document.getElementById('cp_exp').value='';document.getElementById('cp_onePerUser').checked=false;document.getElementById('couponModal').classList.remove('hidden');};
 window.closeCouponModal=()=>document.getElementById('couponModal').classList.add('hidden');
-window.saveCoupon=async()=>{const code=document.getElementById('cp_code').value.trim().toUpperCase();const val=parseFloat(document.getElementById('cp_value').value);if(!code||!val){alert('Código y valor obligatorios');return;}const id=document.getElementById('cp_id').value||code;const btn=document.getElementById('btnCp');btn.textContent='Guardando...';btn.disabled=true;try{await setDoc(doc(db,'artifacts',appId,'public','data','coupons',id),{id,code,discountType:document.getElementById('cp_type').value,discount:val,maxUses:parseInt(document.getElementById('cp_max').value)||0,minAmount:parseFloat(document.getElementById('cp_min').value)||0,expiry:document.getElementById('cp_exp').value||'',active:document.getElementById('cp_active').checked,onePerUser:document.getElementById('cp_onePerUser').checked,uses:0},{merge:true});closeCouponModal();toast('Cupón '+code+' guardado');}catch(e){alert(e.message)}finally{btn.textContent='Guardar Cupón';btn.disabled=false;}};
+window.saveCoupon=async()=>{const code=document.getElementById('cp_code').value.trim().toUpperCase();const val=parseFloat(document.getElementById('cp_value').value);if(!code||!val){alert('Código y valor');return;}const id=document.getElementById('cp_id').value||code;const btn=document.getElementById('btnCp');btn.textContent='Guardando...';btn.disabled=true;try{await setDoc(doc(db,'artifacts',appId,'public','data','coupons',id),{id,code,discountType:document.getElementById('cp_type').value,discount:val,maxUses:parseInt(document.getElementById('cp_max').value)||0,minAmount:parseFloat(document.getElementById('cp_min').value)||0,expiry:document.getElementById('cp_exp').value||'',active:document.getElementById('cp_active').checked,onePerUser:document.getElementById('cp_onePerUser').checked,uses:0},{merge:true});closeCouponModal();toast('Cupón '+code+' guardado');}catch(e){alert(e.message)}finally{btn.textContent='Guardar Cupón';btn.disabled=false;}};
 window.delCp=async id=>{if(confirm('Eliminar cupón?'))await deleteDoc(doc(db,'artifacts',appId,'public','data','coupons',id));};
-function renderCouponsFromListener(snap){let h='';snap.forEach(d=>{const c=d.data();h+=`<div class="bg-darkCard border border-darkBorder rounded-2xl p-4 flex justify-between items-center"><div><div class="font-black text-neonCyan">${esc(c.code)} <span class="text-[10px] px-2 py-0.5 rounded-full ${c.active!==false?'bg-neonGreen/20 text-neonGreen':'bg-red-500/20 text-red-400'}">${c.active!==false?'ACTIVO':'PAUSADO'}</span> ${c.onePerUser?'<span class="text-[9px] bg-neonCyan/20 text-neonCyan px-1.5 py-0.5 rounded">1x USER</span>':''}</div><div class="text-xs text-gray-500 mt-1">${c.discountType==='fixed'?'₲'+c.discount+' OFF':c.discount+'% OFF'} • Min $${c.minAmount||0} • ${c.uses||0}/${c.maxUses||'∞'} ${c.expiry?'• Vence '+c.expiry:''}</div></div><button onclick="delCp('${d.id}')" class="text-red-400 w-9 h-9"><i class="fa-solid fa-trash"></i></button></div>`});document.getElementById('cpList').innerHTML=h||'<p class="text-center text-gray-500 py-10">Sin cupones</p>';}
+function renderCouponsFromListener(snap){let h='';snap.forEach(d=>{const c=d.data();h+=`<div class="bg-darkCard border border-darkBorder rounded-2xl p-4 flex justify-between items-center"><div><div class="font-black" style="color:var(--p1)">${esc(c.code)} <span class="text-[10px] px-2 py-0.5 rounded-full ${c.active!==false?'bg-green-500/20 text-green-400':'bg-red-500/20 text-red-400'}">${c.active!==false?'ACTIVO':'PAUSADO'}</span></div><div class="text-xs text-gray-500 mt-1">${c.discountType==='fixed'?'₲'+c.discount+' OFF':c.discount+'% OFF'} • ${c.uses||0}/${c.maxUses||'∞'}</div></div><button onclick="delCp('${d.id}')" class="text-red-400 w-9 h-9"><i class="fa-solid fa-trash"></i></button></div>`});document.getElementById('cpList').innerHTML=h||'<p class="text-center text-gray-500 py-10">Sin cupones</p>';}
 window.saveStore=async()=>{await setDoc(doc(db,'artifacts',appId,'public','data','settings','general'),{siteName:document.getElementById('s_name').value,siteSubtitle:document.getElementById('s_subtitle').value,heroTitle:document.getElementById('s_hero').value},{merge:true});toast('✅ Tienda guardada');};
+window.saveTheme=async()=>{const theme=document.getElementById('s_theme').value;await setDoc(doc(db,'artifacts',appId,'public','data','settings','general'),{theme},{merge:true});applyTheme(theme);try{localStorage.setItem('nexus_theme',theme);}catch(e){}toast('✅ Color guardado');};
 window.saveBanner=async()=>{await setDoc(doc(db,'artifacts',appId,'public','data','settings','general'),{bannerText:document.getElementById('s_banner_text').value,bannerActive:document.getElementById('s_banner_active').checked},{merge:true});toast('✅ Banner guardado');};
 window.saveSplash=async()=>{await setDoc(doc(db,'artifacts',appId,'public','data','settings','general'),{splashActive:document.getElementById('s_splash_active').checked,splashTitle:document.getElementById('s_splash_title').value,splashSubtitle:document.getElementById('s_splash_subtitle').value,splashText:document.getElementById('s_splash_text').value,splashTimer:parseInt(document.getElementById('s_splash_timer').value)||3},{merge:true});toast('✅ Splash guardado');};
+window.savePayments=async()=>{
+  await setDoc(doc(db,'artifacts',appId,'public','data','settings','general'),{
+    pay_transfer_active:document.getElementById('pay_transfer_active').checked,
+    pay_transfer_name:document.getElementById('pay_transfer_name').value,
+    pay_transfer_image:document.getElementById('pay_transfer_image').value,
+    pay_transfer_details:document.getElementById('pay_transfer_details').value,
+    pay_tigo_active:document.getElementById('pay_tigo_active').checked,
+    pay_tigo_name:document.getElementById('pay_tigo_name').value,
+    pay_tigo_image:document.getElementById('pay_tigo_image').value,
+    pay_tigo_details:document.getElementById('pay_tigo_details').value,
+    pay_binance_active:document.getElementById('pay_binance_active').checked,
+    pay_binance_name:document.getElementById('pay_binance_name').value,
+    pay_binance_image:document.getElementById('pay_binance_image').value,
+    pay_binance_details:document.getElementById('pay_binance_details').value,
+  },{merge:true});
+  toast('✅ Métodos de pago ocultables guardados');
+};
 window.saveContact=async()=>{
 currentRate=parseInt(document.getElementById('s_rate').value)||7500;
 await setDoc(doc(db,'artifacts',appId,'public','data','settings','general'),{
-channelsActive:document.getElementById('s_channels_active').checked,
-rateActive:document.getElementById('s_rate_active').checked,
-contactActive:document.getElementById('s_contact_active').checked,
-legalActive:document.getElementById('s_legal_active').checked,
-floatActive:document.getElementById('s_float_active').checked,
-floatWhatsappActive:document.getElementById('s_float_whatsapp_active').checked,
-floatTelegramActive:document.getElementById('s_float_telegram_active').checked,
-wpp:document.getElementById('s_wpp').value,
-footerWppText:document.getElementById('s_wpp_text').value,
-telegram:document.getElementById('s_telegram').value,
-telegramChannel:document.getElementById('s_telegram_channel').value,
-whatsappChannel:document.getElementById('s_whatsapp_channel').value,
-footerEmail:document.getElementById('s_email').value,
-footerLocation:document.getElementById('s_location').value,
-footerService:document.getElementById('s_service').value,
-rate:currentRate
-},{merge:true});
-toast('✅ Todo guardado');
-};
+channelsActive:document.getElementById('s_channels_active').checked, rateActive:document.getElementById('s_rate_active').checked, contactActive:document.getElementById('s_contact_active').checked, legalActive:document.getElementById('s_legal_active').checked, floatActive:document.getElementById('s_float_active').checked, floatWhatsappActive:document.getElementById('s_float_whatsapp_active').checked, floatTelegramActive:document.getElementById('s_float_telegram_active').checked,
+wpp:document.getElementById('s_wpp').value, footerWppText:document.getElementById('s_wpp_text').value, telegram:document.getElementById('s_telegram').value, telegramChannel:document.getElementById('s_telegram_channel').value, whatsappChannel:document.getElementById('s_whatsapp_channel').value, footerEmail:document.getElementById('s_email').value, footerLocation:document.getElementById('s_location').value, footerService:document.getElementById('s_service').value, rate:currentRate
+},{merge:true}); toast('✅ Todo guardado'); };
 window.saveFooter=async()=>{await setDoc(doc(db,'artifacts',appId,'public','data','settings','general'),{legal_t:document.getElementById('s_terms').value,legal_p:document.getElementById('s_privacy').value,legal_r:document.getElementById('s_refund').value},{merge:true});toast('✅ Legales guardados');};
-window.saveLogConfig=async()=>{
-await setDoc(doc(db,'artifacts',appId,'public','data','settings','general'),{logActive:document.getElementById('s_log_active').checked},{merge:true});
-document.getElementById('debug-box').classList.toggle('hidden',!document.getElementById('s_log_active').checked);
-toast('✅ Log config guardada');
-};
-window.saveSecurity=async()=>{const newPass=document.getElementById('s_newpass').value.trim();if(!newPass){alert('Pon nueva contraseña');return;}await setDoc(doc(db,'artifacts',appId,'public','data','settings','general'),{adminPass:newPass},{merge:true});adminPass=newPass;localStorage.setItem('nexus_admin_pass',newPass);document.getElementById('s_newpass').value='';toast('✅ Contraseña guardada');};
+window.saveLogConfig=async()=>{ await setDoc(doc(db,'artifacts',appId,'public','data','settings','general'),{logActive:document.getElementById('s_log_active').checked},{merge:true}); toast('✅ Log guardada'); };
 </script>
 </body>
 </html>
